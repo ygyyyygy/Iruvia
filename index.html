@@ -1,0 +1,2508 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Iruvia</title>
+
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <style>
+    /* ================================================================
+  GENERAL STYLES
+  ================================================================ */
+html {
+  overflow-x: hidden; 
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Georgia', serif; 
+  overflow: hidden;
+  cursor: none !important; 
+  -ms-overflow-style: none;  
+}
+
+body::-webkit-scrollbar {
+  display: none; 
+}
+
+/* ================================================================
+  CUSTOM CURSOR
+  ================================================================ */
+#customCursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transition: transform 0.15s ease, border-color 0.3s ease;
+  box-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+#customCursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+#customCursor.hover {
+  transform: scale(1.8);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 40px rgba(255, 255, 255, 0.5),
+    inset 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* ================================================================
+  FIRST VIEW - FLOATING TEXT
+  ================================================================ */
+#firstView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.8s ease-out;
+  pointer-events: auto;
+  perspective: 1400px;
+  -webkit-perspective: 1400px;
+}
+
+#firstView.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 3D welcome card */
+#floatingBox {
+  background: linear-gradient(180deg, rgba(28,28,30,0.78), rgba(18,18,20,0.65));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 28px 44px;
+  border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 6px 24px rgba(255,255,255,0.02) inset;
+  backdrop-filter: blur(8px);
+  text-align: center;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  cursor: none;
+  font-family: 'Times New Roman', serif;
+}
+
+/* entrance / exit animations */
+.welcome-enter {
+  animation: cardEnter 900ms cubic-bezier(0.22, 0.9, 0.28, 1) both;
+}
+
+.welcome-exit {
+  animation: cardExit 700ms cubic-bezier(0.22, 0.9, 0.28, 1) both;
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, -420px) rotateX(18deg) rotateY(-12deg) scale(0.92);
+    filter: blur(6px) saturate(0.9);
+  }
+  60% {
+    transform: translate3d(0, 6px, -80px) rotateX(8deg) rotateY(-6deg) scale(0.97);
+    opacity: 1;
+    filter: blur(2px) saturate(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+    filter: blur(0) saturate(1.02);
+  }
+}
+
+@keyframes cardExit {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -40px, 800px) rotateX(-28deg) rotateY(24deg) scale(1.4);
+    filter: blur(10px) saturate(0.6);
+  }
+}
+
+/* inner wrapper for independent translate (keeps 3D rotations intact) */
+#floatingInner {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* wrapper that receives cursor-relative parallax (rotation + translate) */
+#floatingWrapper {
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition: transform 0.12s ease-out;
+}
+
+#floatingBox .main {
+  font-size: 26px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#floatingBox .sub {
+  font-size: 14px;
+  color: #ccc;
+  font-style: italic;
+}
+
+#floatingBox .definition {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #999;
+  line-height: 1.5;
+  font-style: italic;
+  max-width: 500px;
+}
+
+/* ================================================================
+  SECOND VIEW - AKAKALIXTE
+  ================================================================ */
+#secondView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease-out;
+}
+
+#secondView.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Subtle background gradient / vignette removed per request */
+#secondView::before { background: none; }
+
+/* Move GUIs slightly lower to better occupy the lower half and reduce empty center space */
+#guisWrapper {
+  top: 62%;
+  transform: translate(-50%, -40%);
+}
+
+/* Make title sit a bit higher and add a decorative connector */
+#titleContainer {
+  top: 36%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* Small visual cue for interactive GUIs when clicked from JS */
+.smallGui.pulse {
+  animation: pulseGlow 0.9s ease-out forwards;
+  transform: scale(1.06) !important;
+}
+
+/* connector removed by request */
+
+/* global wash removed per request */
+
+/* Slightly reduce spacing on wide screens to avoid feeling empty */
+@media (min-width: 1200px) {
+  #fourContainers { gap: 18px; }
+  #guisWrapper { gap: 18px; }
+  #titleContainer { padding: 30px 48px; }
+}
+
+/* ================================================================
+  АНИМАЦИИ
+  ================================================================ */
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px rgba(255, 255, 255, 0.7),
+      0 0 15px #fff,
+      0 0 30px #fff;
+  }
+  50% {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 1),
+      0 0 20px #fff,
+      0 0 40px #fff,
+      0 0 60px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translate(var(--x-start), -100px) rotateZ(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x-end), 100vh) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes hoverPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================================================================
+  LUMINOUS PETALS
+  ================================================================ */
+.petal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px; 
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5); 
+  pointer-events: none;
+  z-index: 1;
+  animation: fall var(--duration) linear infinite;
+}
+.petal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px; 
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5); 
+  pointer-events: none;
+  z-index: 1;
+  animation: fall var(--duration) linear infinite;
+}
+
+/* ================================================================
+   TITRE PRINCIPAL (GRAND CARRÉ)
+   ================================================================ */
+#titleContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  
+  padding: 40px 60px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 30px rgba(255,255,255,0.05);
+  text-align: center;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  z-index: 100;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ================================================================
+   CONTENEUR DES 4 GUI + BOUTON
+   ================================================================ */
+#guisWrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease-out;
+  z-index: 100;
+  will-change: opacity;
+}
+
+#fourContainers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.smallGui {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  
+  padding: 40px 50px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 30px rgba(255,255,255,0.05);
+  color: #fff;
+  text-align: center;
+  min-width: 250px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  will-change: transform;
+  transform: translateZ(0);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.smallGui:hover {
+  transform: translateZ(0) scale(1.08);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 0 50px rgba(255, 255, 255, 0.15),
+    0 0 100px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  background: rgba(20, 20, 20, 0.75);
+}
+
+.smallGui:hover .gui-title-small {
+  animation: hoverPulse 1.5s ease-in-out infinite;
+}
+
+.smallGui:hover .gui-glow {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 255, 255, 0.9),
+    0 0 30px #fff,
+    0 0 60px #fff,
+    0 0 90px rgba(255, 255, 255, 0.3);
+}
+
+/* ================================================================
+   CONTENU DES GUI
+   ================================================================ */
+.gui-title {
+  font-size: 48px;
+  letter-spacing: 4px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.gui-title-small {
+  font-size: 36px;
+  letter-spacing: 3px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.animated-glow {
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.7),
+    0 0 15px #fff,
+    0 0 30px #fff; 
+  animation: pulseGlow 2.5s infinite alternate ease-in-out; 
+}
+
+.gui-glow {
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.7),
+    0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 20px #fff,
+    0 0 40px #fff;
+  transition: text-shadow 0.4s ease;
+}
+
+.gui-subtitle {
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: #ccc;
+  font-style: italic;
+  position: relative;
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+}
+
+.smallGui:hover .gui-subtitle {
+  color: #fff;
+}
+
+.gui-subtitle::after {
+  content: "";
+  display: block;
+  width: 140px;
+  height: 1px;
+  background: rgba(255,255,255,0.3);
+  margin: 8px auto 0;
+  transition: all 0.3s ease;
+}
+
+.smallGui:hover .gui-subtitle::after {
+  width: 180px;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.gui-extra-text {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #888;
+  font-style: italic;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.smallGui:hover .gui-extra-text {
+  color: #aaa;
+}
+
+/* ================================================================
+   BOUTON INFO
+   ================================================================ */
+#infoButton {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 15px 35px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 30px rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 2px;
+  cursor: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-family: 'Georgia', serif;
+  font-weight: 600;
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.6),
+    0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+#infoButton:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 0 40px rgba(255, 255, 255, 0.12),
+    0 0 80px rgba(255, 255, 255, 0.06);
+  background: rgba(20, 20, 20, 0.75);
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 255, 255, 0.6),
+    0 0 30px #fff;
+}
+
+/* match the close-modal hover effect for Info button */
+#infoButton:hover {
+  color: #fff;
+  transform: scale(1.2);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* ================================================================
+   MENU CONTEXTUEL INFO
+   ================================================================ */
+#infoModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+/* when opening */
+#infoModal.show {
+  opacity: 1;
+  pointer-events: auto;
+  animation: slideIn 0.4s ease-out;
+}
+
+/* when closing */
+#infoModal.hide {
+  opacity: 0;
+  pointer-events: none;
+  animation: slideOut 0.35s ease-in forwards;
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+#infoContent {
+  background: rgba(20, 20, 20, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 45px 55px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 
+    0 0 50px rgba(255,255,255,0.1),
+    0 0 100px rgba(255,255,255,0.05);
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideIn 0.5s ease-out;
+}
+
+#infoContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+#infoContent::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+
+#infoContent::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+}
+
+#infoContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.info-section {
+  margin-bottom: 40px;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 38px;
+  letter-spacing: 4px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.7),
+    0 0 15px rgba(255, 255, 255, 0.5),
+    0 0 30px #fff;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ccc;
+  letter-spacing: 0.5px;
+}
+
+.info-list li:last-child {
+  border-bottom: none;
+}
+
+.info-list li::before {
+  content: '◆';
+  color: rgba(255, 255, 255, 0.6);
+  margin-right: 12px;
+  font-size: 12px;
+}
+
+.info-list li strong {
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+#closeModal {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 30px;
+  color: rgba(255,255,255,0.6);
+  cursor: none;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+#closeModal:hover {
+  color: #fff;
+  transform: scale(1.2);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* make the About-me close button hover match the info modal close */
+#closeContact, #closeWebsites, #closeDesign, #closePortfolio {
+  cursor: none;
+  transition: all 0.25s ease;
+}
+
+#closeContact:hover, #closeWebsites:hover, #closeDesign:hover, #closePortfolio:hover {
+  transform: scale(1.2);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+/* CONTACT PANEL */
+#contactPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.infoPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.infoPanel.show { opacity: 1; pointer-events: auto; }
+.infoPanel.hide { opacity: 0; pointer-events: none; }
+
+.infoContent {
+  background: rgba(18,18,18,0.95);
+  padding: 34px 40px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,255,255,0.02) inset;
+  max-width: 600px;
+  width: calc(100% - 80px);
+  color: #ddd;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  transform: translate(-50%, -48%) scale(0.995);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1), opacity 0.6s ease;
+}
+.infoPanel.show .infoContent {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+#contactPanel.show { opacity: 1; pointer-events: auto; }
+#contactPanel.hide { opacity: 0; pointer-events: none; }
+
+#contactContent {
+  background: rgba(18,18,18,0.95);
+  padding: 34px 40px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,255,255,0.02) inset;
+  max-width: 600px;
+  width: calc(100% - 80px);
+  color: #ddd;
+  position: relative;
+  text-align: center; /* center inline-flex .contact-card inside */
+}
+
+/* animate contact content on show to match title->guis feel */
+#contactPanel #contactContent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -48%) scale(0.995);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1), opacity 0.6s ease;
+}
+
+#contactPanel.show #contactContent {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+#closeContact, #closeWebsites, #closeDesign, #closePortfolio {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-size: 28px;
+  color: rgba(255,255,255,0.6);
+  cursor: none;
+}
+
+.contact-header {
+  font-size: 34px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.contact-text {
+  color: #bbb;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+/* contact card outer look: pill-like container matching screenshot */
+.contact-card {
+  display: inline-flex; /* shrink to content width */
+  gap: 10px;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(18,18,18,0.96), rgba(14,14,14,0.98));
+  padding: 10px 14px; /* compact padding so pill fits avatar+icons */
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  margin: 18px auto; /* center the pill */
+  width: auto;
+}
+
+.contact-card {
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.35s ease;
+  will-change: transform, box-shadow;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px); /* чуть приподнять карточку */
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    0 0 40px rgba(255,255,255,0.02) inset;
+}
+
+/* center text inside the right side info area */
+.contact-info {
+  text-align: center;
+}
+
+/* Social icon buttons behave like small GUI icons */
+.social-links .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+  color: #ddd;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.01);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.6px;
+  transition: transform 0.28s cubic-bezier(0.2,0.8,0.2,1), background 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
+  cursor: none; /* use custom cursor like other interactive elements */
+  user-select: none;
+}
+
+.social-links .social-icon:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.02) inset;
+}
+
+.social-links .social-icon img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+
+.avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* чтобы картинка красиво заполняла блок */
+  display: block;
+}
+
+/* slightly reduce avatar size to better fit compact pill if needed */
+.contact-card .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+}
+
+.contact-info .name {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 700;
+}
+.contact-info .role {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.social-links { display: inline-flex; align-items: center; gap: 8px; }
+
+.social-links .social-icon { margin: 0 6px; }
+
+@media (max-width: 768px) {
+  #contactContent { padding: 22px; }
+  .contact-card { flex-direction: column; align-items: center; }
+  .avatar { width: 110px; height: 110px; }
+  .social-links .social-icon { cursor: pointer; }
+}
+
+/* ================================================================
+   RESPONSIVE MOBILE (max-width: 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+  body {
+    cursor: auto !important;
+  }
+  
+  #customCursor {
+    display: none;
+  }
+  
+  #floatingBox {
+    max-width: 85%;
+    cursor: pointer;
+  }
+  
+  #titleContainer {
+    padding: 30px 40px;
+    max-width: 85%;
+  }
+  
+  .gui-title {
+    font-size: 32px;
+    letter-spacing: 2px;
+  }
+  
+  .social-links .social-icon img {
+    width: 16px;
+    height: 16px;
+    display: block;
+    filter: brightness(0.95) invert(1) sepia(0) saturate(0) hue-rotate(0deg); /* make sure white icons look good */
+  }
+  
+  .gui-subtitle {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  
+  #guisWrapper {
+    max-width: 85%;
+    overflow-y: auto;
+    max-height: 80vh;
+    padding: 20px 0;
+  }
+  
+  #fourContainers {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .smallGui {
+    min-width: auto;
+    width: 100%;
+    padding: 25px 35px;
+    min-height: 140px;
+  }
+  
+  .gui-title-small {
+    font-size: 26px;
+    letter-spacing: 2px;
+  }
+  
+  .gui-subtitle {
+    font-size: 14px;
+  }
+  
+  .gui-extra-text {
+    font-size: 13px;
+  }
+  
+  .smallGui:hover {
+    transform: translateZ(0) scale(1.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .smallGui:hover .gui-title-small {
+    animation: none;
+  }
+  
+  #infoButton {
+    font-size: 18px;
+    padding: 12px 28px;
+    cursor: pointer;
+  }
+  
+  #infoContent {
+    padding: 35px 40px;
+    max-width: 85%;
+    max-height: 75vh;
+  }
+  
+  .section-title {
+    font-size: 32px;
+    letter-spacing: 3px;
+  }
+  
+  .section-subtitle {
+    font-size: 14px;
+  }
+  
+  .info-list li {
+    font-size: 14px;
+  }
+  
+  .petal {
+    width: 6px;
+    height: 6px;
+  }
+  
+  #closeModal {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 480px) {
+  #floatingBox .main {
+    font-size: 22px;
+  }
+  
+  #floatingBox .definition {
+    font-size: 12px;
+  }
+  
+  #titleContainer {
+    padding: 25px 30px;
+  }
+  
+  .gui-title {
+    font-size: 28px;
+  }
+  
+  .gui-title-small {
+    font-size: 22px;
+  }
+  
+  .smallGui {
+    padding: 20px 25px;
+    min-height: 120px;
+  }
+  
+  .gui-subtitle::after {
+    width: 100px;
+  }
+  
+  #infoButton {
+    font-size: 16px;
+    padding: 10px 24px;
+  }
+  
+  #infoContent {
+    padding: 30px 30px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+  
+  .info-list li {
+    font-size: 13px;
+  }
+}
+
+/* ================================================================
+  WORD TRAIL — small gimmick: glowing words on click
+  Uses a CSS keyframe so fade/float aren't interrupted by JS timeouts
+  ================================================================ */
+.word-trail {
+  position: fixed;
+  pointer-events: none;
+  color: #fff;
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0;
+  text-shadow: 
+    0 0 8px rgba(255,255,255,0.9),
+    0 0 20px rgba(255,255,255,0.6),
+    0 0 40px rgba(255,255,255,0.3);
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  z-index: 200;
+}
+
+@keyframes wordFloat {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) scale(var(--scale, 1));
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -140%) rotate(calc(var(--angle, 0deg) + 20deg)) scale(calc(var(--scale, 1) * 0.85));
+  }
+}
+
+.word-trail.show {
+  animation: wordFloat 1.6s cubic-bezier(0.2,0.8,0.2,1) forwards;
+}
+
+/* Дополнительные стили для новых фишек */
+.color-palette {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+.color-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+.color-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+.color-name {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #ccc;
+}
+.project-card {
+  background: rgba(30,30,35,0.5);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.project-card:hover {
+  background: rgba(40,40,45,0.7);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.project-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.project-desc {
+  font-size: 14px;
+  color: #bbb;
+}
+.quote-box {
+  font-style: italic;
+  color: #aaa;
+  border-left: 3px solid rgba(255,255,255,0.3);
+  padding-left: 15px;
+  margin: 20px 0;
+}
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.2s ease;
+}
+.service-item:hover {
+  transform: translateX(5px);
+}
+.service-icon {
+  font-size: 28px;
+}
+.form-message {
+  width: 100%;
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-family: inherit;
+}
+.form-message:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.6);
+}
+.send-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.send-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+}
+
+body.panel-open #firstView {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* ================================================================
+   VOLUME PANEL (FIXED, GRAY THEME)
+   ================================================================ */
+#volumePanel {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(30, 30, 35, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 40px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+#volumePanel:hover {
+  background: rgba(40, 40, 45, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.volume-icon {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #ccc;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  width: 32px;
+  text-align: center;
+}
+
+.volume-icon:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+.volume-slider {
+  width: 120px;
+  height: 5px;
+  background: rgba(200, 200, 200, 0.3);
+  border-radius: 5px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #aaa;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  background: #ddd;
+}
+
+@media (max-width: 640px) {
+  .volume-slider {
+    width: 100px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR (DESKTOP ONLY) -->
+<div id="customCursor"></div>
+
+<!-- AUDIO (hidden) -->
+<audio id="backgroundMusic" loop>
+  <source src="videoplayback.m4a" type="audio/mp4">
+  <source src="videoplayback.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FIRST VIEW - WELCOME SCREEN -->
+<div id="firstView">
+  <div id="floatingWrapper">
+    <div id="floatingBox">
+      <div id="floatingInner">
+      <div class="main">Click here...</div>
+      <div class="sub">Amor — sinceritas — humanitas</div>
+      <div class="definition">
+        Amor (ex Latino amor, significans «dilectio, affectus verus, donum sui ipsius»)
+        est vinculum inter animas, quod non quaerit rationem, sed nascitur ex corde aperto.
+      </div>
+      <div class="definition">
+        Sinceritas (ex Latino sinceritas, significans «puritas, veritas, simplex animus»)
+        est consuetudo loquendi et vivendi sine masca, ubi verba cum corde concordant.
+      </div>
+      <div class="definition">
+        Humanitas (ex Latino humanitas, significans «humanitas, benevolentia, cultus»)
+        est ars vivendi cum aliis in societate, cum respectu, compassionis et aequitatis.
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECOND VIEW - Iruvia -->
+<div id="secondView">
+  <!-- MAIN TITLE -->
+  <div id="titleContainer">
+    <div class="gui-title animated-glow">Iruvia</div> 
+    <div class="gui-subtitle">Modo homo esse volo</div>
+  </div>
+
+  <!-- WRAPPER: 4 GUIS + INFO BUTTON -->
+  <div id="guisWrapper">
+    <div id="fourContainers">
+      <div class="smallGui">
+        <div class="gui-title-small gui-glow">Vita</div>
+        <div class="gui-subtitle">cotidie — passio — somnium</div>
+        <div class="gui-extra-text">student • dev • late nights</div>
+      </div>
+      
+      <div class="smallGui">
+        <div class="gui-title-small gui-glow">Ars</div>
+        <div class="gui-subtitle">victoria — furia — precisio</div>
+        <div class="gui-extra-text">[soon]</div>
+      </div>
+      
+      <div class="smallGui">
+        <div class="gui-title-small gui-glow">Verba</div>
+        <div class="gui-subtitle">poema — sapientia — animus</div>
+        <div class="gui-extra-text"></div>
+      </div>
+      
+      <div class="smallGui">
+        <div class="gui-title-small gui-glow">Contact</div>
+        <div class="gui-subtitle">nexus — inter — nos</div>
+      </div>
+    </div>
+    
+    <button id="infoButton">INFO</button>
+  </div>
+
+  <!-- ПАНЕЛЬ ГРОМКОСТИ (неподвижная, серая) -->
+  <div id="volumePanel">
+    <button id="volumeIcon" class="volume-icon">🔊</button>
+    <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" value="0.1">
+  </div>
+
+  <!-- Скрытый аудио элемент -->
+  <audio id="bgAudio" loop>
+    <source src="videoplayback.m4a" type="audio/mp4">
+    <source src="videoplayback.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- INFO MODAL -->
+  <div id="infoModal">
+    <div id="infoContent">
+      <span id="closeModal">×</span>
+      
+      <!-- General Information -->
+      <div class="info-section">
+        <div class="section-title">INFO</div>
+        <ul class="info-list">
+          <li><strong>Developer :</strong> Iruvia</li>
+          <li><strong>Publication date :</strong> Coming soon..</li>
+          <li><strong>Devise :</strong> Phobia est Arma (Fear is a weapon)</li>
+          <li><strong>Thème :</strong> i don't know ?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="websitesPanel" class="infoPanel">
+    <div id="websitesContent" class="infoContent">
+      <span id="closeWebsites">×</span>
+      <div class="section-title">💻 Веб‑сайты</div>
+      <div class="gui-subtitle">Что я могу сделать для тебя</div>
+      <div class="service-item"><span class="service-icon">◈</span> <span><strong>Лендинг</strong> — страница для стартапа, события или презентации</span></div>
+      <div class="service-item"><span class="service-icon">◈</span> <span><strong>Портфолио</strong> — для художников, фотографов и фрилансеров</span></div>
+      <div class="service-item"><span class="service-icon">◈</span> <span><strong>Мини-магазин</strong> — до десяти товаров с корзиной</span></div>
+      <div class="service-item"><span class="service-icon">◈</span> <span><strong>Адаптивность</strong> — одинаково хорошо на любом экране</span></div>
+      <div class="service-item"><span class="service-icon">◈</span> <span><strong>Скорость</strong> — загружается мгновенно, без лишнего веса</span></div>
+      <div class="quote-box">Средний срок — от трёх до десяти дней. Цена — от пяти тысяч рублей, в зависимости от задачи.</div>
+    </div>
+  </div>
+
+  <div id="designPanel" class="infoPanel">
+    <div id="designContent" class="infoContent">
+      <span id="closeDesign">×</span>
+      <div class="section-title">🎨 Дизайн</div>
+      <div class="gui-subtitle">«Не важно, что это будет: монтаж, сценарий или концепция. Главное — чтобы в конце я мог сказать: да, сюда я вложил частичку себя»</div>
+      <div class="color-palette" id="colorPalette">
+        <div class="color-circle" style="background: #ff6b6b;" data-color="#ff6b6b"></div>
+        <div class="color-circle" style="background: #4ecdc4;" data-color="#4ecdc4"></div>
+        <div class="color-circle" style="background: #ffe66d;" data-color="#ffe66d"></div>
+        <div class="color-circle" style="background: #c7b9ff;" data-color="#c7b9ff"></div>
+        <div class="color-circle" style="background: #ff9f1c;" data-color="#ff9f1c"></div>
+      </div>
+      <div id="selectedColorName" style="text-align: center; margin: 10px 0; color: #ddd; font-size: 14px;">выберите цвет</div>
+      <div class="quote-box">Минимализм, плавные переходы, внимание к деталям. Макеты создаю в Figma или сразу в коде.</div>
+    </div>
+  </div>
+
+  <div id="portfolioPanel" class="infoPanel">
+    <div id="portfolioContent" class="infoContent">
+      <span id="closePortfolio">×</span>
+      <div class="section-title">📂 Портфолио</div>
+      <div class="gui-subtitle">Кейсы, которыми я горжусь</div>
+      <div class="project-card" data-project="1">
+        <div class="project-title">Креативный лендинг для пекарни «Вдохновение»</div>
+        <div class="project-desc">Сделал атмосферный одностраничник с тёплыми иллюстрациями и анимацией выпекаемого хлеба. Заказчица сказала: «Как будто уют в интернет заехал».</div>
+      </div>
+      <div class="project-card" data-project="2">
+        <div class="project-title">Короткий ролик для мастерской свечей</div>
+        <div class="project-desc">Написал сценарий, смонтировал 30-секундный Reels с ироничным голосом за кадром. Результат — 15 тысяч просмотров за неделю.</div>
+      </div>
+      <div class="project-card" data-project="3">
+        <div class="project-title">Концепция бота для настольного клуба</div>
+        <div class="project-desc">Придумал идею Telegram-бота, который помогает договариваться о встречах и собирает голоса за игру. Сейчас в разработке.</div>
+      </div>
+      <div id="projectDetails" style="margin-top: 20px; padding: 12px; background: rgba(0,0,0,0.3); border-radius: 8px; font-size: 14px; color: #aaa;">нажмите на проект, чтобы узнать подробности</div>
+    </div>
+  </div>
+
+  <!-- CONTACT PANEL -->
+  <div id="contactPanel">
+    <div id="contactContent">
+      <span id="closeContact">×</span>
+
+
+      <div class="section-title">about me :)</div>
+      <div class="gui-subtitle">Work in progress... 2 %</div>
+      <div class="contact-card">
+        <div class="avatar"><img src="icons/avatar.gif" alt="Avatar" loading="lazy"></div>
+        <div class="contact-info">
+          <div class="social-links">
+            <a class="social-icon" href="https://twitch.tv/Iru0_o" target="_blank" rel="noopener" aria-hidden="true"><img src="icons/twitch.svg" alt="Twitch" loading="lazy"></a>
+            <a class="social-icon" href="https://t.me/silennnn" target="_blank" rel="noopener" aria-hidden="true"><img src="icons/telegram.svg" alt="Telegram" loading="lazy"></a>
+            <a class="social-icon" href="https://steamcommunity.com/id/Iru0_o/" target="_blank" rel="noopener" aria-hidden="true"><img src="icons/steam.svg" alt="Steam" loading="lazy"></a>
+            <a class="social-icon" href="https://open.spotify.com/user/31v276p4qgoqmbfyvbtfe2c6blxe" target="_blank" rel="noopener" aria-hidden="true"><img src="icons/spotify.svg" alt="Spotify" loading="lazy"></a>
+            <a class="social-icon" href="https://discord.com/users/517210061454442496" target="_blank" rel="noopener" aria-hidden="true"><img src="icons/discord.svg" alt="Discord" loading="lazy"></a>
+            <a class="social-icon" href="https://www.youtube.com/@s1Iect" target="_blank" rel="noopener" aria-hidden="true"><img src="icons/youtube.svg" alt="Youtube" loading="lazy"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<script>
+// ================================================================
+// DOM ELEMENTS
+// ================================================================
+const firstView = document.getElementById('firstView');
+const secondView = document.getElementById('secondView');
+const floatingBox = document.getElementById('floatingBox');
+const floatingWrapper = document.getElementById('floatingWrapper');
+const titleContainer = document.getElementById('titleContainer');
+const guisWrapper = document.getElementById('guisWrapper');
+const customCursor = document.getElementById('customCursor');
+const infoButton = document.getElementById('infoButton');
+const infoModal = document.getElementById('infoModal');
+const closeModal = document.getElementById('closeModal');
+const infoContent = document.getElementById('infoContent');
+
+let currentView = 'title';
+let transitionTimeout = null;
+let hasEnteredSecondView = false;
+let hasEnteredContactView = false;
+let wheelCooldownUntil = 0;
+let scrollingEnabled = true;
+
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+// ================================================================
+// МГНОВЕННОЕ СКРЫТИЕ ПЕРВОГО ЭКРАНА ПРИ ПРЯМОМ ПЕРЕХОДЕ
+// ================================================================
+
+(function() {
+    // Проверяем URL прямо сейчас (до загрузки DOM)
+    const currentPath = window.location.pathname.substring(1);
+    const isPanelPath = currentPath === 'contact' || currentPath === 'websites' || 
+                        currentPath === 'design' || currentPath === 'portfolio';
+    
+    if (isPanelPath) {
+        // Добавляем класс к body, который скрывает первый экран через CSS
+        document.body.classList.add('panel-open');
+        
+        // Также сразу скрываем firstView, если он уже есть в DOM
+        const firstViewElement = document.getElementById('firstView');
+        if (firstViewElement) {
+            firstViewElement.style.display = 'none';
+            firstViewElement.style.opacity = '0';
+            firstViewElement.style.visibility = 'hidden';
+        }
+        
+        // Отмечаем, что мы уже во втором экране
+        window.__forceSecondView = true;
+    }
+})();
+
+// ================================================================
+// ФИКС ПРЯМОГО ОТКРЫТИЯ ПАНЕЛЕЙ ПО URL
+// ================================================================
+
+// Переопределяем функцию, которая показывает первый экран
+// Добавляем проверку: если в URL есть путь панели — сразу переходим ко второму экрану и открываем панель
+const originalTriggerFirstExit = triggerFirstExit;
+window.triggerFirstExit = function() {
+    // Проверяем, не нужно ли сразу открыть панель
+    const currentPath = window.location.pathname.substring(1);
+    const isPanelPath = currentPath && (currentPath === 'contact' || currentPath === 'websites' || currentPath === 'design' || currentPath === 'portfolio');
+    
+    if (isPanelPath) {
+        // Если это путь панели — сразу переходим ко второму экрану, минуя анимацию приветствия
+        if (!hasEnteredSecondView) {
+            firstView.classList.add('hidden');
+            secondView.classList.add('visible');
+            hasEnteredSecondView = true;
+            
+            // Сразу показываем GUI (скрываем заголовок)
+            titleContainer.style.opacity = '0';
+            titleContainer.style.transform = 'translate(-50%, -150%)';
+            titleContainer.style.pointerEvents = 'none';
+            guisWrapper.style.opacity = '1';
+            guisWrapper.style.pointerEvents = 'auto';
+            currentView = 'guis';
+            
+            // Открываем нужную панель
+            setTimeout(() => {
+                const panelId = pathToPanel[currentPath];
+                if (panelId) {
+                    openInfoPanelById(panelId);
+                }
+            }, 100);
+        }
+        return;
+    }
+    
+    // Иначе стандартное поведение
+    if (originalTriggerFirstExit) {
+        originalTriggerFirstExit();
+    }
+};
+
+// Также исправляем инициализацию при загрузке страницы
+// Добавляем этот код после определения всех функций, но до вызова openPanelFromURL
+const originalDOMContentLoaded = window.onload || document.addEventListener('DOMContentLoaded', () => {});
+window.addEventListener('DOMContentLoaded', () => {
+    // Проверяем путь при загрузке
+    const currentPath = window.location.pathname.substring(1);
+    const isPanelPath = currentPath && (currentPath === 'contact' || currentPath === 'websites' || currentPath === 'design' || currentPath === 'portfolio');
+    
+    if (isPanelPath) {
+        // Если это путь панели — скрываем первый экран мгновенно
+        if (firstView && !hasEnteredSecondView) {
+            firstView.style.opacity = '0';
+            firstView.style.pointerEvents = 'none';
+            firstView.classList.add('hidden');
+            secondView.classList.add('visible');
+            hasEnteredSecondView = true;
+            
+            // Показываем GUI
+            titleContainer.style.opacity = '0';
+            titleContainer.style.transform = 'translate(-50%, -150%)';
+            titleContainer.style.pointerEvents = 'none';
+            guisWrapper.style.opacity = '1';
+            guisWrapper.style.pointerEvents = 'auto';
+            currentView = 'guis';
+            
+            // Открываем панель
+            setTimeout(() => {
+                const panelId = pathToPanel[currentPath];
+                if (panelId) {
+                    openInfoPanelById(panelId);
+                }
+            }, 50);
+        }
+    }
+});
+
+// ================================================================
+// CUSTOM CURSOR (DESKTOP ONLY)
+// ================================================================
+if (!isMobile) {
+  let mouseX = 0;
+  let mouseY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animateCursor() {
+    const dx = mouseX - cursorX;
+    const dy = mouseY - cursorY;
+    
+    cursorX += dx * 0.15;
+    cursorY += dy * 0.15;
+    
+    customCursor.style.left = cursorX - 10 + 'px';
+    customCursor.style.top = cursorY - 10 + 'px';
+    
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  const interactiveElements = document.querySelectorAll('.smallGui, #infoButton, #closeModal, #floatingWrapper, .social-icon, #closeContact, #closeWebsites, #closeDesign, #closePortfolio, .color-circle, .project-card, .send-btn');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => customCursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => customCursor.classList.remove('hover'));
+  });
+}
+
+// ================================================================
+// FLOATING BOX ANIMATION (FIRST VIEW)
+// ================================================================
+if (!isMobile) {
+  let mouseXFloat = window.innerWidth / 2;
+  let mouseYFloat = window.innerHeight / 2;
+  let currentXFloat = mouseXFloat;
+  let currentYFloat = mouseYFloat;
+  let lastXFloat = currentXFloat;
+  let lastYFloat = currentYFloat;
+  let currentRotX = 0;
+  let currentRotY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseXFloat = e.clientX;
+    mouseYFloat = e.clientY;
+  });
+
+  function animateFloatingBox() {
+    lastXFloat = currentXFloat;
+    lastYFloat = currentYFloat;
+    
+    currentXFloat += (mouseXFloat - currentXFloat) * 0.03;
+    currentYFloat += (mouseYFloat - currentYFloat) * 0.03;
+    
+    const offsetX = (currentXFloat - window.innerWidth / 2) * 0.05;
+    const offsetY = (currentYFloat - window.innerHeight / 2) * 0.05;
+    
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const relX = (currentXFloat - centerX) / centerX;
+    const relY = (currentYFloat - centerY) / centerY;
+
+    const maxRotY = 8;
+    const maxRotX = 6;
+
+    const targetRotY = relX * maxRotY;
+    const targetRotX = -relY * maxRotX;
+
+    currentRotX += (targetRotX - currentRotX) * 0.08;
+    currentRotY += (targetRotY - currentRotY) * 0.08;
+
+    if (floatingWrapper) {
+      floatingWrapper.style.transform = `translate(${offsetX}px, ${offsetY}px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg)`;
+    }
+    
+    const deltaX = Math.abs(currentXFloat - lastXFloat);
+    const deltaY = Math.abs(currentYFloat - lastYFloat);
+    const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    const blurAmount = Math.min(speed * 0.5, 2);
+    const shadowSpread = Math.min(speed * 1.5, 30);
+    
+    if (floatingBox) {
+      floatingBox.style.backdropFilter = `blur(${6 + blurAmount}px)`;
+      floatingBox.style.boxShadow = `0 0 ${20 + shadowSpread}px rgba(255,255,255,${0.05 + (blurAmount * 0.02)})`;
+    }
+    
+    requestAnimationFrame(animateFloatingBox);
+  }
+  animateFloatingBox();
+}
+
+// ================================================================
+// LUMINOUS PETALS
+// ================================================================
+const NUM_PETALS = isMobile ? 15 : 30;
+const MIN_DURATION = 10;
+const MAX_DURATION = 20;
+
+function createPetal() {
+  const petal = document.createElement('div');
+  petal.classList.add('petal');
+  document.body.appendChild(petal);
+
+  const xStart = Math.random() * window.innerWidth;
+  const xEnd = xStart + (Math.random() - 0.5) * 400;
+  const duration = Math.random() * (MAX_DURATION - MIN_DURATION) + MIN_DURATION;
+
+  petal.style.left = `${xStart}px`;
+  petal.style.setProperty('--x-start', '0px');
+  petal.style.setProperty('--x-end', `${xEnd - xStart}px`);
+  petal.style.setProperty('--duration', `${duration}s`);
+  petal.style.animationDelay = `-${Math.random() * duration}s`;
+
+  petal.addEventListener('animationend', () => {
+    petal.remove();
+    createPetal();
+  });
+}
+
+for (let i = 0; i < NUM_PETALS; i++) {
+  createPetal();
+}
+
+// ================================================================
+// TRANSITION FROM FIRST VIEW TO SECOND
+// ================================================================
+function enterSecondView() {
+  if (hasEnteredSecondView) return;
+  hasEnteredSecondView = true;
+  
+  firstView.classList.add('hidden');
+  
+  setTimeout(() => {
+    secondView.classList.add('visible');
+    setTimeout(() => {
+      titleContainer.style.opacity = '1';
+      titleContainer.style.transform = 'translate(-50%, -50%)';
+    }, 300);
+  }, 800);
+}
+
+if (floatingBox) {
+  floatingBox.classList.add('welcome-enter');
+
+  function triggerFirstExit() {
+    if (hasEnteredSecondView) return;
+    if (floatingBox.classList.contains('welcome-exit')) return;
+    floatingBox.classList.add('welcome-exit');
+    floatingBox.addEventListener('animationend', () => {
+      enterSecondView();
+    }, { once: true });
+  }
+
+  floatingBox.addEventListener('click', triggerFirstExit);
+  floatingBox.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    triggerFirstExit();
+  }, { passive: false });
+}
+
+// ================================================================
+// NAVIGATION DANS LA SECONDE VUE (TITRE <-> GUI)
+// ================================================================
+function startTransition(target) {
+  if (!hasEnteredSecondView) return;
+  if (currentView === target && !transitionTimeout) return;
+
+  if (transitionTimeout) {
+    clearTimeout(transitionTimeout);
+    transitionTimeout = null;
+  }
+
+  if (target === 'guis') {
+    titleContainer.style.opacity = '0';
+    titleContainer.style.transform = 'translate(-50%, -150%)';
+    titleContainer.style.pointerEvents = 'none';
+
+    guisWrapper.style.opacity = '1';
+    guisWrapper.style.pointerEvents = 'auto';
+  } else {
+    guisWrapper.style.opacity = '0';
+    guisWrapper.style.pointerEvents = 'none';
+
+    titleContainer.style.opacity = '1';
+    titleContainer.style.transform = 'translate(-50%, -50%)';
+    titleContainer.style.pointerEvents = 'auto';
+  }
+
+  transitionTimeout = setTimeout(() => {
+    currentView = target;
+    transitionTimeout = null;
+  }, 800);
+}
+
+function transitionToGuis() { startTransition('guis'); }
+function transitionToTitle() { startTransition('title'); }
+
+window.addEventListener('wheel', (e) => {
+  if (Date.now() < wheelCooldownUntil) return;
+  if (!scrollingEnabled || !hasEnteredSecondView || hasEnteredContactView) return;
+  if (e.deltaY > 0) {
+    transitionToGuis();
+  } else if (e.deltaY < 0) {
+    transitionToTitle();
+  }
+}, { passive: true });
+
+let touchStartY = 0;
+window.addEventListener('touchstart', (e) => {
+  if (!hasEnteredSecondView) return;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener('touchmove', (e) => {
+  if (!scrollingEnabled || !hasEnteredSecondView) return;
+  
+  const touchEndY = e.touches[0].clientY;
+  const diff = touchStartY - touchEndY;
+  
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      transitionToGuis();
+    } else {
+      transitionToTitle();
+    }
+    touchStartY = touchEndY;
+  }
+}, { passive: true });
+
+// ================================================================
+// MODAL INFO
+// ================================================================
+function openModal() {
+  infoModal.classList.remove('hide');
+  infoModal.classList.add('show');
+  scrollingEnabled = false;
+}
+
+function closeModalFunc() {
+  if (!infoModal.classList.contains('show')) return;
+  infoModal.classList.remove('show');
+  infoModal.classList.add('hide');
+  setTimeout(() => {
+    infoModal.classList.remove('hide');
+  }, 420);
+  scrollingEnabled = true;
+}
+
+infoButton.addEventListener('click', () => {
+  openModal();
+});
+
+closeModal.addEventListener('click', closeModalFunc);
+
+infoModal.addEventListener('click', (e) => {
+  if (e.target === infoModal) {
+    closeModalFunc();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModalFunc();
+    exitContactView();
+  }
+});
+
+// ================================================================
+// PANEL MANAGEMENT (единая система открытия/закрытия)
+// ================================================================
+function openInfoPanelById(panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+
+  titleContainer.style.opacity = '0';
+  titleContainer.style.transform = 'translate(-50%, -150%)';
+  titleContainer.style.pointerEvents = 'none';
+
+  guisWrapper.style.opacity = '0';
+  guisWrapper.style.pointerEvents = 'none';
+
+  panel.classList.remove('hide');
+  panel.classList.add('show');
+
+  hasEnteredContactView = true;
+  scrollingEnabled = true;
+  wheelCooldownUntil = Date.now() + 900;
+  
+  // Генерация случайной цитаты для контента (весело)
+  const quotes = [
+    "💡 Код — это поэзия, только с синтаксисом",
+    "🚀 Сделаем твой сайт быстрее, чем кофе остынет",
+    "🎨 Дизайн — это не просто картинки, это эмоции",
+    "⚡ 99% багов уже исправлены, остальные — фичи",
+    "🍕 Пицца + код = лучший вечер"
+  ];
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  const existingQuote = panel.querySelector('.quote-box');
+  if (existingQuote && !panelId.includes('contact')) {
+    existingQuote.innerHTML = `✨ ${randomQuote}`;
+  }
+}
+
+function exitContactView() {
+  if (!hasEnteredContactView) return;
+  hasEnteredContactView = false;
+
+  const shownInfoPanels = document.querySelectorAll('.infoPanel.show');
+  shownInfoPanels.forEach(p => {
+    p.classList.remove('show');
+    p.classList.add('hide');
+    setTimeout(() => p.classList.remove('hide'), 420);
+  });
+
+  setTimeout(() => {
+    titleContainer.style.opacity = '0';
+    titleContainer.style.transform = 'translate(-50%, -150%)';
+    titleContainer.style.pointerEvents = 'none';
+
+    guisWrapper.style.opacity = '1';
+    guisWrapper.style.pointerEvents = 'auto';
+    scrollingEnabled = true;
+    wheelCooldownUntil = Date.now() + 900;
+  }, 420);
+}
+
+function closeAnyPanel(panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel || !panel.classList.contains('show')) return;
+  
+  panel.classList.remove('show');
+  panel.classList.add('hide');
+  setTimeout(() => panel.classList.remove('hide'), 420);
+
+  clearURL();
+  
+  if (panelId !== 'contactPanel') {
+    setTimeout(() => {
+      if (!document.querySelector('.infoPanel.show')) {
+        titleContainer.style.opacity = '0';
+        titleContainer.style.transform = 'translate(-50%, -150%)';
+        titleContainer.style.pointerEvents = 'none';
+        guisWrapper.style.opacity = '1';
+        guisWrapper.style.pointerEvents = 'auto';
+        scrollingEnabled = true;
+        hasEnteredContactView = false;
+      }
+    }, 420);
+    return;
+  }
+  
+  if (hasEnteredContactView) {
+    hasEnteredContactView = false;
+    setTimeout(() => {
+      titleContainer.style.opacity = '0';
+      titleContainer.style.transform = 'translate(-50%, -150%)';
+      titleContainer.style.pointerEvents = 'none';
+      guisWrapper.style.opacity = '1';
+      guisWrapper.style.pointerEvents = 'auto';
+      scrollingEnabled = true;
+      wheelCooldownUntil = Date.now() + 900;
+    }, 420);
+  }
+}
+
+// Назначение закрывающих кнопок
+document.getElementById('closeContact')?.addEventListener('click', () => closeAnyPanel('contactPanel'));
+document.getElementById('closeWebsites')?.addEventListener('click', () => closeAnyPanel('websitesPanel'));
+document.getElementById('closeDesign')?.addEventListener('click', () => closeAnyPanel('designPanel'));
+document.getElementById('closePortfolio')?.addEventListener('click', () => closeAnyPanel('portfolioPanel'));
+
+// ================================================================
+// ДОПОЛНИТЕЛЬНЫЕ ФИШКИ ДЛЯ ПАНЕЛЕЙ
+// ================================================================
+
+// 1. Дизайн — интерактивная палитра
+const colorCircles = document.querySelectorAll('.color-circle');
+const selectedColorName = document.getElementById('selectedColorName');
+if (colorCircles.length && selectedColorName) {
+  const colorNames = {
+    '#ff6b6b': 'коралловый',
+    '#4ecdc4': 'бирюзовый',
+    '#ffe66d': 'лимонный',
+    '#c7b9ff': 'лавандовый',
+    '#ff9f1c': 'мандариновый'
+  };
+  colorCircles.forEach(circle => {
+    circle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      const color = circle.dataset.color;
+      const name = colorNames[color] || 'Красивый цвет ✨';
+      selectedColorName.innerHTML = `вы выбрали: ${name}`;
+      selectedColorName.style.color = color;
+      selectedColorName.style.textShadow = `0 0 8px ${color}`;
+    });
+  });
+}
+
+// 2. Портфолио — детали проектов при клике
+const projectCards = document.querySelectorAll('.project-card');
+const projectDetailsDiv = document.getElementById('projectDetails');
+if (projectCards.length && projectDetailsDiv) {
+  const projectData = {
+    1: 'Сделал тёплый лендинг для пекарни с анимацией поднимающегося теста. Заказчица улыбнулась — значит, всё правильно.',
+    2: 'Написал сценарий и смонтировал 30-секундный ролик для мастерской свечей. Получил 15K просмотров и фразу «ты передал наш вайб».',
+    3: 'Придумал концепцию бота для настольного клуба: помогает договариваться о встречах без лишних сообщений. Сейчас в работе, но идея уже живёт.'
+  };
+  projectCards.forEach(card => {
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    const projectId = card.dataset.project;
+    const details = projectData[projectId] || '🔥 Скоро добавлю ещё кейсы!';
+    projectDetailsDiv.innerHTML = `📌 ${details}`;
+    projectDetailsDiv.style.animation = 'slideIn 0.3s ease';
+    setTimeout(() => { projectDetailsDiv.style.animation = ''; }, 300);
+  });
+});
+}
+
+// 3. Contact — отправка сообщения (имитация)
+const sendBtn = document.getElementById('sendMessageBtn');
+const messageInput = document.getElementById('messageInput');
+const sendFeedback = document.getElementById('sendFeedback');
+if (sendBtn && messageInput) {
+  sendBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    const msg = messageInput.value.trim();
+    if (msg) {
+      sendFeedback.innerHTML = 'Спасибо! Я свяжусь с тобой в ближайшее время 💫';
+      sendFeedback.style.color = '#4ecdc4';
+      messageInput.value = '';
+      setTimeout(() => {
+        sendFeedback.innerHTML = '';
+      }, 3000);
+    } else {
+      sendFeedback.innerHTML = 'Напиши что-нибудь о проекте :)';
+      sendFeedback.style.color = '#ff6b6b';
+      setTimeout(() => {
+        sendFeedback.innerHTML = '';
+      }, 2000);
+    }
+  });
+}
+
+// 4. Общая функция spawnWord для эффекта клика
+const wordPhrases = [
+  'тишина', 'свет', 'отражение', 'между строк', 'почти',
+  'вдох', 'выдох', 'нить', 'здесь', 'сейчас',
+  'предел', 'бесконечность', 'миг', 'после', 'до',
+  'эхо', 'тень', 'взгляд', 'пауза', 'смысл',
+  'пустота', 'форма', 'цвет', 'линия', 'ритм',
+  'баланс', 'движение', 'покой', 'слой', 'акцент'
+];
+
+function spawnWord(x, y) {
+  const el = document.createElement('div');
+  el.className = 'word-trail';
+  el.textContent = wordPhrases[Math.floor(Math.random() * wordPhrases.length)];
+  document.body.appendChild(el);
+
+  const angle = (Math.random() - 0.5) * 40;
+  const scale = 0.9 + Math.random() * 0.7;
+
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  el.style.setProperty('--angle', angle + 'deg');
+  el.style.setProperty('--scale', scale);
+
+  requestAnimationFrame(() => el.classList.add('show'));
+  el.addEventListener('animationend', () => el.remove(), { once: true });
+}
+
+document.addEventListener('click', (e) => {
+  // ===== 1. Глобальные элементы интерфейса (НЕ спавним) =====
+  if (e.target.closest('#infoModal, .smallGui, #infoButton, #floatingBox, #closeModal')) return;
+  
+  // ===== 2. Кнопки закрытия панелей (НЕ спавним) =====
+  if (e.target.closest('#closeContact, #closeWebsites, #closeDesign, #closePortfolio')) return;
+  
+  // ===== 3. ПАНЕЛЬ ГРОМКОСТИ И ЕЁ ЭЛЕМЕНТЫ (НЕ спавним) =====
+  if (e.target.closest('#volumePanel, .volume-icon, .volume-slider')) return;
+  
+  // ===== 4. ВСЕ интерактивные элементы внутри панелей (НЕ спавним) =====
+  if (e.target.closest('.project-card, .color-circle, .send-btn, .social-icon, .service-item, #sendMessageBtn, #messageInput, .form-message, .contact-card a, .contact-card .social-icon, .avatar, .contact-info')) {
+    return;
+  }
+  
+  // ===== 5. Если клик внутри ЛЮБОЙ открытой панели =====
+  if (hasEnteredContactView && e.target.closest('.infoPanel.show')) {
+    const panel = e.target.closest('.infoPanel.show');
+    const content = e.target.closest('.infoContent');
+    
+    if (e.target === panel) {
+      spawnWord(e.clientX, e.clientY);
+      return;
+    }
+    
+    if (content && (e.target === content || e.target.parentElement === content || e.target.classList.contains('infoContent'))) {
+      const isInteractive = e.target.closest('.project-card, .color-circle, .send-btn, .social-icon, .service-item, #sendMessageBtn, #messageInput, .form-message');
+      if (!isInteractive) {
+        spawnWord(e.clientX, e.clientY);
+      }
+      return;
+    }
+    return;
+  }
+  
+  // ===== 6. Вне панелей — спавним слово =====
+  spawnWord(e.clientX, e.clientY);
+});
+
+// 5. Клики по smallGui — открытие панелей с динамическим контентом
+function bindSmallGuiClicks() {
+  const guis = document.querySelectorAll('.smallGui');
+  guis.forEach(gui => {
+    gui.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      gui.classList.add('pulse');
+      setTimeout(() => gui.classList.remove('pulse'), 900);
+      
+      const titleEl = gui.querySelector('.gui-title-small');
+      const cardTitle = titleEl ? titleEl.textContent.trim().toLowerCase() : '';
+      
+      // Сопоставляем заголовки карточек с ID панелей
+      if (cardTitle === 'contact') {
+        openInfoPanelById('contactPanel');
+      } else if (cardTitle === 'vita') {
+        openInfoPanelById('websitesPanel');  // или можно создать vitaPanel
+      } else if (cardTitle === 'ars') {
+        openInfoPanelById('designPanel');    // или можно создать arsPanel
+      } else if (cardTitle === 'verba') {
+        openInfoPanelById('portfolioPanel'); // или можно создать verbaPanel
+      } 
+    });
+  });
+}
+bindSmallGuiClicks();
+
+// 6. Wheel и touch для возврата из панелей
+window.addEventListener('wheel', (e) => {
+  if (Date.now() < wheelCooldownUntil) return;
+  if (!scrollingEnabled || !hasEnteredContactView) return;
+  if (e.deltaY < 0) {
+    exitContactView();
+    wheelCooldownUntil = Date.now() + 900;
+  }
+}, { passive: true });
+
+let touchStartY_contact = 0;
+window.addEventListener('touchstart', (e) => {
+  if (!hasEnteredContactView) return;
+  touchStartY_contact = e.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener('touchmove', (e) => {
+  if (!scrollingEnabled || !hasEnteredContactView) return;
+  const touchEndY = e.touches[0].clientY;
+  const diff = touchStartY_contact - touchEndY;
+  if (Math.abs(diff) > 50) {
+    if (diff < 0) {
+      exitContactView();
+    }
+    touchStartY_contact = touchEndY;
+  }
+}, { passive: true });
+
+
+// ================================================================
+// УПРАВЛЕНИЕ URL ДЛЯ ПАНЕЛЕЙ (ДОБАВИТЬ В КОНЕЦ СКРИПТА)
+// ================================================================
+
+// Соответствие между panelId и URL-путём
+const panelToPath = {
+    'contactPanel': 'contact',
+    'websitesPanel': 'websites',
+    'designPanel': 'design',
+    'portfolioPanel': 'portfolio'
+};
+
+// Обратное соответствие: путь → panelId
+const pathToPanel = {
+    'contact': 'contactPanel',
+    'websites': 'websitesPanel',
+    'design': 'designPanel',
+    'portfolio': 'portfolioPanel'
+};
+
+// Обновляет URL в адресной строке без перезагрузки страницы
+function updateURLForPanel(panelId) {
+    const path = panelToPath[panelId];
+    if (path) {
+        window.history.pushState({ panel: panelId }, '', '/' + path);
+    }
+}
+
+// Очищает URL (возвращает на корень сайта)
+function clearURL() {
+    window.history.pushState({ panel: null }, '', '/');
+}
+
+// Открывает панель по URL-пути (вызывается при загрузке страницы)
+function openPanelFromURL() {
+    const path = window.location.pathname.substring(1);
+    
+    if (path && pathToPanel[path]) {
+        const panelId = pathToPanel[path];
+        
+        // Убираем класс panel-open, чтобы стили не мешали нормальной работе
+        document.body.classList.remove('panel-open');
+        
+        // Принудительно показываем второй экран в режиме GUI (без анимации)
+        if (!hasEnteredSecondView) {
+            // Мгновенно скрываем первый экран без анимации
+            if (firstView) {
+                firstView.style.display = 'none';
+                firstView.style.opacity = '0';
+                firstView.style.visibility = 'hidden';
+                firstView.classList.add('hidden');
+            }
+            
+            // Показываем второй экран
+            if (secondView) {
+                secondView.classList.add('visible');
+            }
+            
+            hasEnteredSecondView = true;
+            
+            // Скрываем заголовок, показываем GUI
+            if (titleContainer) {
+                titleContainer.style.opacity = '0';
+                titleContainer.style.transform = 'translate(-50%, -150%)';
+                titleContainer.style.pointerEvents = 'none';
+            }
+            if (guisWrapper) {
+                guisWrapper.style.opacity = '1';
+                guisWrapper.style.pointerEvents = 'auto';
+            }
+            currentView = 'guis';
+        }
+        
+        // Открываем панель
+        setTimeout(() => {
+            const panel = document.getElementById(panelId);
+            if (panel && !panel.classList.contains('show')) {
+                openInfoPanelById(panelId);
+            }
+        }, 50);
+    } else if (window.__forceSecondView) {
+        // Если был прямой переход, но путь не панельный — возвращаем нормальное состояние
+        document.body.classList.remove('panel-open');
+        const firstViewElement = document.getElementById('firstView');
+        if (firstViewElement) {
+            firstViewElement.style.display = '';
+            firstViewElement.style.opacity = '';
+            firstViewElement.style.visibility = '';
+        }
+    }
+}
+
+// Сохраняем ОРИГИНАЛЬНУЮ функцию openInfoPanelById
+const originalOpenInfoPanelById = openInfoPanelById;
+
+// ПЕРЕОПРЕДЕЛЯЕМ функцию openInfoPanelById (добавляем обновление URL)
+openInfoPanelById = function(panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+
+    titleContainer.style.opacity = '0';
+    titleContainer.style.transform = 'translate(-50%, -150%)';
+    titleContainer.style.pointerEvents = 'none';
+
+    guisWrapper.style.opacity = '0';
+    guisWrapper.style.pointerEvents = 'none';
+
+    panel.classList.remove('hide');
+    panel.classList.add('show');
+
+    hasEnteredContactView = true;
+    scrollingEnabled = true;
+    wheelCooldownUntil = Date.now() + 900;
+    
+    // 👇 НОВАЯ СТРОЧКА: обновляем URL
+    updateURLForPanel(panelId);
+    
+    // Генерация случайной цитаты для контента
+    const quotes = [
+        "💡 Код — это поэзия, только с синтаксисом",
+        "🚀 Сделаем твой сайт быстрее, чем кофе остынет",
+        "🎨 Дизайн — это не просто картинки, это эмоции",
+        "⚡ 99% багов уже исправлены, остальные — фичи",
+        "🍕 Пицца + код = лучший вечер"
+    ];
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    const existingQuote = panel.querySelector('.quote-box');
+    if (existingQuote && !panelId.includes('contact')) {
+        existingQuote.innerHTML = `✨ ${randomQuote}`;
+    }
+};
+
+// Сохраняем ОРИГИНАЛЬНУЮ функцию exitContactView
+const originalExitContactView = exitContactView;
+
+// ПЕРЕОПРЕДЕЛЯЕМ функцию exitContactView (добавляем очистку URL)
+exitContactView = function() {
+    if (!hasEnteredContactView) return;
+    hasEnteredContactView = false;
+
+    const shownInfoPanels = document.querySelectorAll('.infoPanel.show');
+    shownInfoPanels.forEach(p => {
+        p.classList.remove('show');
+        p.classList.add('hide');
+        setTimeout(() => p.classList.remove('hide'), 420);
+    });
+
+    // 👇 НОВАЯ СТРОЧКА: очищаем URL
+    clearURL();
+
+    setTimeout(() => {
+        titleContainer.style.opacity = '0';
+        titleContainer.style.transform = 'translate(-50%, -150%)';
+        titleContainer.style.pointerEvents = 'none';
+
+        guisWrapper.style.opacity = '1';
+        guisWrapper.style.pointerEvents = 'auto';
+        scrollingEnabled = true;
+        wheelCooldownUntil = Date.now() + 900;
+    }, 420);
+};
+
+// Обработчик для кнопок "Назад" и "Вперёд" в браузере
+window.addEventListener('popstate', (event) => {
+    if (event.state && event.state.panel) {
+        const panelId = event.state.panel;
+        const panel = document.getElementById(panelId);
+        if (panel && !panel.classList.contains('show')) {
+            openInfoPanelById(panelId);
+        }
+    } else {
+        if (hasEnteredContactView) {
+            exitContactView();
+        } else if (currentView === 'guis') {
+            transitionToTitle();
+        }
+    }
+});
+
+// При загрузке страницы проверяем URL и открываем нужную панель
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', openPanelFromURL);
+} else {
+    openPanelFromURL();
+}
+
+// ================================================================
+// TYPING ANIMATION FOR BROWSER TAB TITLE
+// ================================================================
+function setupTabTitleAnimation() {
+  const baseWord = 'Iruvia';  // Слово без подчёркивания
+  const underscore = '_';      // Подчёркивание, которое всегда остаётся
+  let currentText = underscore; // Начинаем с "_"
+  let isDeleting = false;
+  let charIndex = 0;           // Индекс букв в baseWord
+  let typingSpeed = 250;       // скорость печати (мс)
+  let deletingSpeed = 180;     // скорость стирания (мс)
+  let pauseBetween = 1000;     // пауза между циклами (мс)
+  let timeoutId = null;
+  
+  // Сразу показываем "_"
+  document.title = underscore;
+  
+  function typeEffect() {
+    if (!isDeleting) {
+      // Режим печати: добавляем буквы перед "_"
+      if (charIndex < baseWord.length) {
+        currentText = baseWord.substring(0, charIndex + 1) + underscore;
+        document.title = currentText;
+        charIndex++;
+        timeoutId = setTimeout(typeEffect, typingSpeed);
+      } else {
+        // Полное слово напечатано: "Iruvia_" - пауза
+        isDeleting = true;
+        timeoutId = setTimeout(typeEffect, pauseBetween);
+      }
+    } else {
+      // Режим стирания: убираем буквы, но "_" остаётся
+      if (charIndex > 0) {
+        currentText = baseWord.substring(0, charIndex - 1) + underscore;
+        document.title = currentText;
+        charIndex--;
+        timeoutId = setTimeout(typeEffect, deletingSpeed);
+      } else {
+        // Осталось только "_" - начинаем печатать заново
+        isDeleting = false;
+        timeoutId = setTimeout(typeEffect, typingSpeed);
+      }
+    }
+  }
+  
+  // Запускаем анимацию
+  typeEffect();
+  
+  // Останавливаем анимацию, если вкладка не активна
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      // Показываем полное название, когда вкладка не активна
+      document.title = baseWord + underscore;
+    } else {
+      if (!timeoutId) {
+        // Сбрасываем состояние и запускаем заново
+        currentText = underscore;
+        isDeleting = false;
+        charIndex = 0;
+        document.title = underscore;
+        typeEffect();
+      }
+    }
+  });
+}
+
+// Запускаем анимацию после загрузки страницы
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupTabTitleAnimation);
+} else {
+  setupTabTitleAnimation();
+}
+
+// ================================================================
+// VOLUME CONTROL PANEL
+// ================================================================
+const audio = document.getElementById('bgAudio');
+const volumeIcon = document.getElementById('volumeIcon');
+const volumeSlider = document.getElementById('volumeControl');
+
+// Устанавливаем начальную громкость 10%
+if (audio) {
+  audio.volume = 0.1;
+  audio.play().catch(e => console.log('Автовоспроизведение заблокировано'));
+}
+
+function setVolume(value) {
+  const vol = parseFloat(value);
+  if (audio) audio.volume = vol;
+  if (volumeIcon) volumeIcon.textContent = vol === 0 ? '🔇' : '🔊';
+}
+
+function toggleMute() {
+  if (!audio) return;
+  if (audio.volume > 0) {
+    audio.dataset.prevVol = audio.volume;
+    audio.volume = 0;
+    if (volumeSlider) volumeSlider.value = 0;
+    if (volumeIcon) volumeIcon.textContent = '🔇';
+  } else {
+    const prev = parseFloat(audio.dataset.prevVol || 0.1);
+    audio.volume = prev;
+    if (volumeSlider) volumeSlider.value = prev;
+    if (volumeIcon) volumeIcon.textContent = '🔊';
+  }
+}
+
+if (volumeIcon) volumeIcon.addEventListener('click', toggleMute);
+if (volumeSlider) volumeSlider.addEventListener('input', (e) => setVolume(e.target.value));
+</script>
+</body>
+</html>
