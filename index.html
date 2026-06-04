@@ -2821,7 +2821,7 @@ if (document.readyState === 'loading') {
 }
 
 // ================================================================
-// TYPING ANIMATION FOR BROWSER TAB TITLE (РАБОТАЕТ ВСЕГДА)
+// TYPING ANIMATION FOR BROWSER TAB TITLE (РАБОТАЕТ НА GITHUB)
 // ================================================================
 function setupTabTitleAnimation() {
   const baseWord = 'Iruvia';
@@ -2834,6 +2834,7 @@ function setupTabTitleAnimation() {
   let pauseBetween = 1000;
   let timeoutId = null;
   
+  // Принудительно устанавливаем заголовок
   document.title = underscore;
   
   function typeEffect() {
@@ -2860,7 +2861,30 @@ function setupTabTitleAnimation() {
     }
   }
   
+  // Запускаем анимацию сразу
   typeEffect();
+  
+  // Дополнительно: принудительный сброс, если заголовок изменился
+  setInterval(function() {
+    if (document.title === baseWord + underscore) return;
+    if (document.title === underscore) return;
+    if (!document.title.includes(baseWord) && !document.title.includes(underscore)) {
+      // Если заголовок изменился извне — перезапускаем
+      clearTimeout(timeoutId);
+      currentText = underscore;
+      isDeleting = false;
+      charIndex = 0;
+      document.title = underscore;
+      typeEffect();
+    }
+  }, 500);
+}
+
+// Запускаем после полной загрузки
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupTabTitleAnimation);
+} else {
+  setupTabTitleAnimation();
 }
 
 // Запускаем анимацию после загрузки страницы
