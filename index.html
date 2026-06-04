@@ -2821,73 +2821,46 @@ if (document.readyState === 'loading') {
 }
 
 // ================================================================
-// TYPING ANIMATION FOR BROWSER TAB TITLE
+// TYPING ANIMATION FOR BROWSER TAB TITLE (РАБОТАЕТ ВСЕГДА)
 // ================================================================
 function setupTabTitleAnimation() {
-  const baseWord = 'Iruvia';  // Слово без подчёркивания
-  const underscore = '_';      // Подчёркивание, которое всегда остаётся
-  let currentText = underscore; // Начинаем с "_"
+  const baseWord = 'Iruvia';
+  const underscore = '_';
+  let currentText = underscore;
   let isDeleting = false;
-  let charIndex = 0;           // Индекс букв в baseWord
-  let typingSpeed = 250;       // скорость печати (мс)
-  let deletingSpeed = 180;     // скорость стирания (мс)
-  let pauseBetween = 1000;     // пауза между циклами (мс)
+  let charIndex = 0;
+  let typingSpeed = 250;
+  let deletingSpeed = 180;
+  let pauseBetween = 1000;
   let timeoutId = null;
   
-  // Сразу показываем "_"
   document.title = underscore;
   
   function typeEffect() {
     if (!isDeleting) {
-      // Режим печати: добавляем буквы перед "_"
       if (charIndex < baseWord.length) {
         currentText = baseWord.substring(0, charIndex + 1) + underscore;
         document.title = currentText;
         charIndex++;
         timeoutId = setTimeout(typeEffect, typingSpeed);
       } else {
-        // Полное слово напечатано: "Iruvia_" - пауза
         isDeleting = true;
         timeoutId = setTimeout(typeEffect, pauseBetween);
       }
     } else {
-      // Режим стирания: убираем буквы, но "_" остаётся
       if (charIndex > 0) {
         currentText = baseWord.substring(0, charIndex - 1) + underscore;
         document.title = currentText;
         charIndex--;
         timeoutId = setTimeout(typeEffect, deletingSpeed);
       } else {
-        // Осталось только "_" - начинаем печатать заново
         isDeleting = false;
         timeoutId = setTimeout(typeEffect, typingSpeed);
       }
     }
   }
   
-  // Запускаем анимацию
   typeEffect();
-  
-  // Останавливаем анимацию, если вкладка не активна
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-      // Показываем полное название, когда вкладка не активна
-      document.title = baseWord + underscore;
-    } else {
-      if (!timeoutId) {
-        // Сбрасываем состояние и запускаем заново
-        currentText = underscore;
-        isDeleting = false;
-        charIndex = 0;
-        document.title = underscore;
-        typeEffect();
-      }
-    }
-  });
 }
 
 // Запускаем анимацию после загрузки страницы
