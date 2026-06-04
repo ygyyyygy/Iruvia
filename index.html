@@ -706,12 +706,12 @@ body::-webkit-scrollbar {
 }
 
 /* make the About-me close button hover match the info modal close */
-#closeContact, #closeWebsites, #closeDesign, #closePortfolio {
+#closeContact, #closeWebsites, #closeDesign, #closePortfolio, #closeMemoria {
   cursor: none;
   transition: all 0.25s ease;
 }
 
-#closeContact:hover, #closeWebsites:hover, #closeDesign:hover, #closePortfolio:hover {
+#closeContact:hover, #closeWebsites:hover, #closeDesign:hover, #closePortfolio:hover, #closeMemoria:hover {
   transform: scale(1.2);
   border-color: rgba(255, 255, 255, 1);
 }
@@ -802,7 +802,7 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
-#closeContact, #closeWebsites, #closeDesign, #closePortfolio {
+#closeContact, #closeWebsites, #closeMemoria, #closePortfolio {
   position: absolute;
   top: 16px;
   right: 18px;
@@ -1310,6 +1310,393 @@ body.panel-open #firstView {
     width: 100px;
   }
 }
+/* ================================================================
+   ВКЛАДКИ MEMORIA — ПРАВИЛЬНОЕ СКРЫТИЕ
+   ================================================================ */
+.tab-content {
+  display: none !important;
+}
+
+.tab-content.active {
+  display: block !important;
+}
+
+/* ================================================================
+   ПАГИНАЦИЯ ДЛЯ MEMORIA
+   ================================================================ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pagination-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #aaa;
+  font-size: 13px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 6px;
+  cursor: none;
+  transition: all 0.2s ease;
+  font-family: 'Georgia', serif;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.pagination-btn.active {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pagination-arrow {
+  font-size: 14px;
+}
+
+/* Фиксированная высота для списков, чтобы окно не прыгало */
+.media-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* ================================================================
+   MEMORIA — УВЕЛИЧЕННЫЙ РАЗМЕР
+   ================================================================ */
+
+/* Контейнер панели */
+#memoriaContent {
+  background: rgba(8, 8, 12, 0.92) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  max-width: 680px;
+  padding: 32px 40px;
+}
+
+/* Заголовок */
+#memoriaContent .section-title {
+  font-size: 34px;
+  letter-spacing: 8px;
+  font-weight: 400;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+#memoriaContent .gui-subtitle {
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: #777;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+}
+
+/* Вкладки */
+.memoria-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 28px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 18px;
+  font-family: 'Georgia', serif;
+  letter-spacing: 4px;
+  cursor: none;
+  padding: 8px 0;
+  transition: all 0.25s ease;
+}
+
+.tab-btn:hover {
+  color: #bbb;
+}
+
+.tab-btn.active {
+  color: #fff;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background: #fff;
+  box-shadow: 0 0 6px #fff;
+}
+
+/* Сетка списка — фиксированная высота */
+.media-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 400px;
+  max-height: 440px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.media-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.media-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.media-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* Карточка — увеличенная */
+.media-item {
+  background: transparent;
+  border-radius: 0;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: none;
+  transition: all 0.25s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.media-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateX(6px);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Обложка — больше */
+.media-cover {
+  width: 56px;
+  height: 80px;
+  background: rgba(20, 20, 25, 0.6);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Текст — крупнее */
+.media-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #eee;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.media-meta {
+  font-size: 13px;
+  color: #777;
+  letter-spacing: 0.5px;
+}
+
+/* Пагинация */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pagination-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #bbb;
+  font-size: 14px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  cursor: none;
+  transition: all 0.2s ease;
+  font-family: 'Georgia', serif;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.pagination-btn.active {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pagination-arrow {
+  font-size: 16px;
+}
+
+/* ================================================================
+   МОДАЛЬНОЕ ОКНО — ИСПРАВЛЕННАЯ ВЕРСИЯ
+   ================================================================ */
+.media-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.media-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.media-modal-content {
+  background: rgba(10, 10, 14, 0.96);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  max-width: 420px;
+  width: 90%;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.media-modal.show .media-modal-content {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.modal-cover {
+  width: 80px;
+  height: 110px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.modal-year {
+  color: #777;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.modal-rating {
+  color: #b8a88c;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.modal-review {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #aaa;
+  font-style: normal;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 18px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: none;
+  transition: all 0.25s ease;
+  background: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Обложка — поддерживает картинки */
+.media-cover {
+  width: 56px;
+  height: 80px;
+  background: rgba(20, 20, 25, 0.6);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.media-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
   </style>
 </head>
@@ -1319,8 +1706,7 @@ body.panel-open #firstView {
 <div id="customCursor"></div>
 
 <!-- AUDIO (hidden) -->
-<audio id="backgroundMusic" loop>
-  <source src="videoplayback.m4a" type="audio/mp4">
+<audio id="bgAudio" loop>
   <source src="videoplayback.mp3" type="audio/mpeg">
 </audio>
 
@@ -1358,25 +1744,29 @@ body.panel-open #firstView {
 
   <!-- WRAPPER: 4 GUIS + INFO BUTTON -->
   <div id="guisWrapper">
+    <!-- Essentia — сущность, философия, обо мне -->
     <div id="fourContainers">
       <div class="smallGui">
-        <div class="gui-title-small gui-glow">Vita</div>
-        <div class="gui-subtitle">cotidie — passio — somnium</div>
-        <div class="gui-extra-text">student • dev • late nights</div>
+        <div class="gui-title-small gui-glow">Essentia</div>
+        <div class="gui-subtitle">essentia — anima — aeternitas</div>
+        <div class="gui-extra-text">creatrix • inter mundos • scriptor</div>
       </div>
       
+      <!-- Memoria — фильмы и книги -->
       <div class="smallGui">
-        <div class="gui-title-small gui-glow">Ars</div>
-        <div class="gui-subtitle">victoria — furia — precisio</div>
-        <div class="gui-extra-text">[soon]</div>
+        <div class="gui-title-small gui-glow">Memoria</div>
+        <div class="gui-subtitle">pellicula — liber — cogitatio</div>
+        <div class="gui-extra-text">cinema • library • impressions</div>
       </div>
       
+      <!-- Opera — блог / деятельность -->
       <div class="smallGui">
-        <div class="gui-title-small gui-glow">Verba</div>
-        <div class="gui-subtitle">poema — sapientia — animus</div>
-        <div class="gui-extra-text"></div>
+        <div class="gui-title-small gui-glow">Opera</div>
+        <div class="gui-subtitle">video — mons — futurum</div>
+        <div class="gui-extra-text">soon... in progress</div>
       </div>
       
+      <!-- Contact — контакты -->
       <div class="smallGui">
         <div class="gui-title-small gui-glow">Contact</div>
         <div class="gui-subtitle">nexus — inter — nos</div>
@@ -1391,12 +1781,6 @@ body.panel-open #firstView {
     <button id="volumeIcon" class="volume-icon">🔊</button>
     <input type="range" id="volumeControl" class="volume-slider" min="0" max="1" step="0.01" value="0.1">
   </div>
-
-  <!-- Скрытый аудио элемент -->
-  <audio id="bgAudio" loop>
-    <source src="videoplayback.m4a" type="audio/mp4">
-    <source src="videoplayback.mp3" type="audio/mpeg">
-  </audio>
 
   <!-- INFO MODAL -->
   <div id="infoModal">
@@ -1468,6 +1852,49 @@ body.panel-open #firstView {
     </div>
   </div>
 
+  <!-- MEMORIA PANEL (фильмы и книги) -->
+  <div id="memoriaPanel" class="infoPanel">
+    <div id="memoriaContent" class="infoContent" style="max-width: 650px;">
+      <span id="closeMemoria">×</span>
+      <div class="section-title">📜 Memoria</div>
+      <div class="gui-subtitle">quod spectavi — quod legi</div>
+      
+      <!-- Вкладки -->
+      <div class="memoria-tabs">
+        <button class="tab-btn active" data-tab="films">🎬 Pelliculae</button>
+        <button class="tab-btn" data-tab="books">📖 Libri</button>
+      </div>
+      
+      <!-- Фильмы -->
+      <div id="filmsTab" class="tab-content active">
+        <div class="media-grid" id="filmsList"></div>
+        <div class="pagination" id="filmsPagination"></div>
+      </div>
+      
+      <!-- Книги -->
+      <div id="booksTab" class="tab-content">
+        <div class="media-grid" id="booksList"></div>
+        <div class="pagination" id="booksPagination"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно для деталей -->
+  <div id="mediaModal" class="media-modal">
+    <div class="media-modal-content">
+      <span class="modal-close" id="closeMediaModal">×</span>
+      <div class="modal-header">
+        <div class="modal-cover" id="modalCover">🎬</div>
+        <div>
+          <div class="modal-title" id="modalTitle"></div>
+          <div class="modal-year" id="modalYear"></div>
+          <div class="modal-rating" id="modalRating"></div>
+        </div>
+      </div>
+      <div class="modal-review" id="modalReview"></div>
+    </div>
+  </div>
+
   <!-- CONTACT PANEL -->
   <div id="contactPanel">
     <div id="contactContent">
@@ -1528,7 +1955,7 @@ const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/
     // Проверяем URL прямо сейчас (до загрузки DOM)
     const currentPath = window.location.pathname.substring(1);
     const isPanelPath = currentPath === 'contact' || currentPath === 'websites' || 
-                        currentPath === 'design' || currentPath === 'portfolio';
+                        currentPath === 'design' || currentPath === 'portfolio' || currentPath === 'memoria';
     
     if (isPanelPath) {
         // Добавляем класс к body, который скрывает первый экран через CSS
@@ -1557,7 +1984,8 @@ const originalTriggerFirstExit = triggerFirstExit;
 window.triggerFirstExit = function() {
     // Проверяем, не нужно ли сразу открыть панель
     const currentPath = window.location.pathname.substring(1);
-    const isPanelPath = currentPath && (currentPath === 'contact' || currentPath === 'websites' || currentPath === 'design' || currentPath === 'portfolio');
+    const isPanelPath = currentPath && (currentPath === 'contact' || currentPath === 'websites' || currentPath === 'design' || currentPath === 'portfolio'||
+                        currentPath === 'memoria');
     
     if (isPanelPath) {
         // Если это путь панели — сразу переходим ко второму экрану, минуя анимацию приветствия
@@ -1597,7 +2025,8 @@ const originalDOMContentLoaded = window.onload || document.addEventListener('DOM
 window.addEventListener('DOMContentLoaded', () => {
     // Проверяем путь при загрузке
     const currentPath = window.location.pathname.substring(1);
-    const isPanelPath = currentPath && (currentPath === 'contact' || currentPath === 'websites' || currentPath === 'design' || currentPath === 'portfolio');
+    const isPanelPath = currentPath && (currentPath === 'contact' || currentPath === 'websites' || currentPath === 'design' || currentPath === 'portfolio'||
+                        currentPath === 'memoria');
     
     if (isPanelPath) {
         // Если это путь панели — скрываем первый экран мгновенно
@@ -1655,7 +2084,7 @@ if (!isMobile) {
   }
   animateCursor();
 
-  const interactiveElements = document.querySelectorAll('.smallGui, #infoButton, #closeModal, #floatingWrapper, .social-icon, #closeContact, #closeWebsites, #closeDesign, #closePortfolio, .color-circle, .project-card, .send-btn');
+  const interactiveElements = document.querySelectorAll('.smallGui, #infoButton, #closeModal, #floatingWrapper, .social-icon, #closeContact, #closeWebsites, #closeDesign, #closePortfolio, #closeMemoria, .color-circle, .project-card, .send-btn, .media-item, .tab-btn, .modal-close');
   interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => customCursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => customCursor.classList.remove('hover'));
@@ -2114,7 +2543,7 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('#infoModal, .smallGui, #infoButton, #floatingBox, #closeModal')) return;
   
   // ===== 2. Кнопки закрытия панелей (НЕ спавним) =====
-  if (e.target.closest('#closeContact, #closeWebsites, #closeDesign, #closePortfolio')) return;
+  if (e.target.closest('#closeContact, #closeWebsites, #closeDesign, #closePortfolio, #closeMemoria, .modal-close')) return;
   
   // ===== 3. ПАНЕЛЬ ГРОМКОСТИ И ЕЁ ЭЛЕМЕНТЫ (НЕ спавним) =====
   if (e.target.closest('#volumePanel, .volume-icon, .volume-slider')) return;
@@ -2160,16 +2589,15 @@ function bindSmallGuiClicks() {
       const titleEl = gui.querySelector('.gui-title-small');
       const cardTitle = titleEl ? titleEl.textContent.trim().toLowerCase() : '';
       
-      // Сопоставляем заголовки карточек с ID панелей
       if (cardTitle === 'contact') {
         openInfoPanelById('contactPanel');
-      } else if (cardTitle === 'vita') {
-        openInfoPanelById('websitesPanel');  // или можно создать vitaPanel
-      } else if (cardTitle === 'ars') {
-        openInfoPanelById('designPanel');    // или можно создать arsPanel
-      } else if (cardTitle === 'verba') {
-        openInfoPanelById('portfolioPanel'); // или можно создать verbaPanel
-      } 
+      } else if (cardTitle === 'essentia') {
+        openInfoPanelById('websitesPanel');
+      } else if (cardTitle === 'memoria') {
+        openInfoPanelById('memoriaPanel');
+      } else if (cardTitle === 'opera') {
+        openInfoPanelById('portfolioPanel');
+      }
     });
   });
 }
@@ -2213,7 +2641,8 @@ const panelToPath = {
     'contactPanel': 'contact',
     'websitesPanel': 'websites',
     'designPanel': 'design',
-    'portfolioPanel': 'portfolio'
+    'portfolioPanel': 'portfolio',
+    'memoriaPanel': 'memoria'
 };
 
 // Обратное соответствие: путь → panelId
@@ -2221,7 +2650,8 @@ const pathToPanel = {
     'contact': 'contactPanel',
     'websites': 'websitesPanel',
     'design': 'designPanel',
-    'portfolio': 'portfolioPanel'
+    'portfolio': 'portfolioPanel',
+    'memoria': 'memoriaPanel'
 };
 
 // Обновляет URL в адресной строке без перезагрузки страницы
@@ -2503,6 +2933,529 @@ function toggleMute() {
 
 if (volumeIcon) volumeIcon.addEventListener('click', toggleMute);
 if (volumeSlider) volumeSlider.addEventListener('input', (e) => setVolume(e.target.value));
+
+// Запуск музыки ПОСЛЕ первого клика пользователя (браузеры блокируют авто-воспроизведение)
+const bgAudio = document.getElementById('bgAudio');
+let audioStarted = false;
+
+function startAudioOnFirstClick() {
+  if (!audioStarted && bgAudio) {
+    bgAudio.volume = 0.1;
+    bgAudio.play().then(() => {
+      audioStarted = true;
+      console.log('🎵 Музыка играет');
+    }).catch(e => console.log('Ошибка:', e));
+  }
+}
+
+// Запускаем при первом клике в любом месте страницы
+document.addEventListener('click', startAudioOnFirstClick);
+
+// ================================================================
+// MEMORIA: ПАГИНАЦИЯ (1 2 ▶ → 1 2 3 ▶ → ◀ 2 3 4 ▶)
+// ================================================================
+
+// ================================================================
+// MEMORIA: ПАГИНАЦИЯ ПО ТАБЛИЦЕ
+// ================================================================
+
+(function() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMemoria);
+  } else {
+    initMemoria();
+  }
+  
+  function initMemoria() {
+    const memoriaPanel = document.getElementById('memoriaPanel');
+    if (!memoriaPanel) return;
+    
+    // ДАННЫЕ ФИЛЬМОВ
+    const filmsData = [
+      { 
+        id: 1, 
+        title: "Пять ночей с Фредди", 
+        year: 2023, 
+        rating: 4,
+        review: "Мшка фрд",
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10893610/006f4e12-edf3-44b4-8eae-ff231b2fab7d/300x450"
+      },
+      { 
+        id: 2, 
+        title: "Пять ночей с Фредди 2", 
+        year: 2025, 
+        rating: 4.2, 
+        review: "Мшка фрд 2", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10812607/5f6f58dc-a8d0-43f8-8216-b9afaad59e7f/300x450"
+      },
+      { 
+        id: 3, 
+        title: "Оно", 
+        year: 2017, 
+        rating: 2, 
+        review: "Теперь я ненавижу клоунов :)", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/6201401/c2554fb1-0c11-49b7-8c99-3a32e696b2ab/300x450"
+      },
+      { 
+        id: 4, 
+        title: "Кунг-фу Панда", 
+        year: 2008, 
+        rating: "пяточок",
+        review: "На добром вроде", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/a9c4698d-7eea-4fe8-8624-4c536c09f7fd/300x450"
+      },
+      { 
+        id: 5, 
+        title: "Кунг-фу Панда 2", 
+        year: 2011, 
+        rating: 5.5,
+        review: "Прикольна", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1898899/6f8602bd-3058-40f2-911b-e16b68a634b6/300x450"
+      },
+      { 
+        id: 6, 
+        title: "Улыбка 2", 
+        year: 2024,
+        rating: 6.1,
+        review: "Лор по мне интересный", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10703959/63594e16-fbe4-4f03-a9f9-922dff5210f3/300x450"
+      },
+      { 
+        id: 7, 
+        title: "Не говори никому", 
+        year: 2024, 
+        rating: 6.6,
+        review: "Прикольна", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/4486454/3ff2376a-ea2d-412f-803a-d1bffbb4d4ca/300x450"
+      },
+      { 
+        id: 8, 
+        title: "Дитя тьмы первая жертва", 
+        year: 2024, 
+        rating: 5.3,
+        review: "Забыл че там", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/5df017f1-4f1e-412e-8010-21c232ee2384/300x450"
+      },
+      { 
+        id: 9, 
+        title: "Пункт назначения: Узы крови", 
+        year: 2025, 
+        rating: 5.1,
+        review: "Тож забыл че там, но вроде там всем не очень приятно была", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10703859/b7bec2e0-27ca-4acd-9f3c-52e40f85f52b/300x450"
+      },
+      { 
+        id: 10, 
+        title: "Лето 84", 
+        year: 2017, 
+        rating: 6.1,
+        review: "Мне зашло", 
+        cover: "https://avatars.mds.yandex.net/get-ott/12808873/2a0000019852477ca5dd357f61c68d9566bf/300x450"
+      },
+      { 
+        id: 11, 
+        title: "Верни ее из мертвых", 
+        year: 2025, 
+        rating: 4.3,
+        review: "Бык тупогуб", 
+        cover: "https://avatars.mds.yandex.net/get-ott/223007/2a00000198a3933a1b0acdd96205cb6be100/300x450"
+      },
+      { 
+        id: 12, 
+        title: "Дожить до рассвета", 
+        year: 2025, 
+        rating: 6,
+        review: "Как лето 84, кайфарики", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10900341/66b4ea0f-df7e-4291-ba6c-64702cb35e07/300x450"
+      },
+      { 
+        id: 13, 
+        title: "Паранойя", 
+        year: 2007, 
+        rating: 0,
+        review: "Cool", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/65b39085-6fc4-4923-846a-315232de5bca/300x450"
+      },
+      { 
+        id: 14, 
+        title: "Заклятье. Дом 32", 
+        year: 2020, 
+        rating: 3.1,
+        review: "Shiziki", 
+        cover: "https://avatars.mds.yandex.net/get-ott/12808873/2a00000198537c621ddb0c66ff0938fdb230/300x450"
+      },
+      { 
+        id: 15, 
+        title: "Ужасающий 2", 
+        year: 2022,
+        rating: 3.8,
+        review: "Мясо 20", 
+        cover: "https://avatars.mds.yandex.net/get-ott/2439731/2a0000019853c7141fa1d8019bc1035e8cee/300x450"
+      },
+      { 
+        id: 16, 
+        title: "Ужасающий 3", 
+        year: 2024,
+        rating: 3.8,
+        review: "Мясо 30", 
+        cover: "https://avatars.mds.yandex.net/get-ott/13051577/2a0000019851c6983dff5fc617acd46d4fb3/300x450"
+      },
+      { 
+        id: 17, 
+        title: "Я иду искать", 
+        year: 2019, 
+        rating: 6.2,
+        review: "На одном дыхании смотриться, лайк", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/fbd455e5-4516-4079-9af8-0da26a34f2ba/300x450"
+      },
+      { 
+        id: 18, 
+        title: "Я иду искать 2", 
+        year: 2026, 
+        rating: 6.4,
+        review: "Между первой и второй..", 
+        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10900341/34089b83-5b12-414e-b9a5-94c1d81c7d21/300x450"
+      }
+    ];
+
+    // ,
+    //   { 
+    //     id: 19, 
+    //     title: "", 
+    //     year: 0, 
+    //     rating: 0,
+    //     review: "", 
+    //     cover: ""
+    //   }
+
+    // ДАННЫЕ КНИГ
+    const booksData = [
+      { 
+        id: 1, 
+        title: "Белые ночи", 
+        author: "Фёдор Достоевский", 
+        year: 1848, 
+        rating: 7.2, 
+        review: "Как первая полностью прочитанная книжка, мне понравилось, читалось на одном слоге", 
+        cover: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Dostoyevski_-_White_Nights_%281865%29.jpg/330px-Dostoyevski_-_White_Nights_%281865%29.jpg"
+      }
+    ];
+
+    // ,
+    //   { 
+    //     id: 2, 
+    //     title: "", 
+    //     author: "", 
+    //     year: 0, 
+    //     rating: 0, 
+    //     review: "", 
+    //     cover: ""
+    //   }
+    
+    const ITEMS_PER_PAGE = 3; // 3 элемента на страницу
+    
+    // Вычисляем количество страниц
+    const filmsTotalPages = Math.ceil(filmsData.length / ITEMS_PER_PAGE); // 4/3 = 2 страницы
+    const booksTotalPages = Math.ceil(booksData.length / ITEMS_PER_PAGE); // 8/3 = 3 страницы
+    
+    let filmsPage = 1;
+    let booksPage = 1;
+    
+    function getRating(rating) {
+      return rating;
+    }
+    
+    // Функция пагинации
+    function getPaginationButtons(currentPage, totalPages) {
+      const buttons = [];
+      
+      if (totalPages === 1) return buttons;
+      
+      if (currentPage === 1) {
+        // Страница 1: 1 2 ▶ (если есть вторая страница)
+        buttons.push({ type: 'page', value: 1, label: '1' });
+        if (totalPages >= 2) {
+          buttons.push({ type: 'page', value: 2, label: '2' });
+        }
+        if (totalPages > 2) {
+          buttons.push({ type: 'arrow', value: 'next', label: '▶' });
+        }
+      }
+      else if (currentPage === 2 && totalPages === 2) {
+        // Страница 2 из 2: ◀ 1 2
+        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
+        buttons.push({ type: 'page', value: 1, label: '1' });
+        buttons.push({ type: 'page', value: 2, label: '2' });
+      }
+      else if (currentPage === 2 && totalPages === 3) {
+        // Страница 2 из 3: 1 2 3 ▶
+        buttons.push({ type: 'page', value: 1, label: '1' });
+        buttons.push({ type: 'page', value: 2, label: '2' });
+        buttons.push({ type: 'page', value: 3, label: '3' });
+        buttons.push({ type: 'arrow', value: 'next', label: '▶' });
+      }
+      else if (currentPage === totalPages - 1 && totalPages > 2) {
+        // Предпоследняя страница: ◀ X X+1 X+2 ▶
+        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
+        buttons.push({ type: 'page', value: currentPage - 1, label: (currentPage - 1).toString() });
+        buttons.push({ type: 'page', value: currentPage, label: currentPage.toString() });
+        buttons.push({ type: 'page', value: currentPage + 1, label: (currentPage + 1).toString() });
+        buttons.push({ type: 'arrow', value: 'next', label: '▶' });
+      }
+      else if (currentPage === totalPages) {
+        // Последняя страница: ◀ X X+1 X+2
+        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
+        if (totalPages >= 3) {
+          buttons.push({ type: 'page', value: totalPages - 2, label: (totalPages - 2).toString() });
+        }
+        if (totalPages >= 2) {
+          buttons.push({ type: 'page', value: totalPages - 1, label: (totalPages - 1).toString() });
+        }
+        buttons.push({ type: 'page', value: totalPages, label: totalPages.toString() });
+      }
+      else {
+        // Середина: ◀ X X+1 X+2 ▶
+        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
+        buttons.push({ type: 'page', value: currentPage - 1, label: (currentPage - 1).toString() });
+        buttons.push({ type: 'page', value: currentPage, label: currentPage.toString() });
+        buttons.push({ type: 'page', value: currentPage + 1, label: (currentPage + 1).toString() });
+        buttons.push({ type: 'arrow', value: 'next', label: '▶' });
+      }
+      
+      return buttons;
+    }
+    
+    // Рендер фильмов
+    function renderFilms() {
+      const container = document.getElementById('filmsList');
+      if (!container) return;
+      const start = (filmsPage - 1) * ITEMS_PER_PAGE;
+      const pageItems = filmsData.slice(start, start + ITEMS_PER_PAGE);
+      
+      let html = '';
+      for (let i = 0; i < ITEMS_PER_PAGE; i++) {
+        const film = pageItems[i];
+        if (film) {
+          html += `
+            <div class="media-item" data-type="film" data-id="${film.id}">
+              <div class="media-cover">
+                <img src="${film.cover}" alt="${film.title}" loading="lazy">
+              </div>
+              <div class="media-info">
+                <div class="media-title">${film.title}</div>
+                <div class="media-meta">${film.year} • ${getRating(film.rating)}/10</div>
+              </div>
+            </div>
+          `;
+        } else {
+          html += `<div class="media-item" style="opacity:0; pointer-events:none; visibility:hidden;">
+            <div class="media-cover" style="opacity:0;"></div>
+            <div class="media-info">
+              <div class="media-title" style="opacity:0;"> </div>
+              <div class="media-meta" style="opacity:0;"> </div>
+            </div>
+          </div>`;
+        }
+      }
+      container.innerHTML = html;
+      renderFilmsPagination();
+    }
+    
+    // Рендер книг
+    function renderBooks() {
+      const container = document.getElementById('booksList');
+      if (!container) return;
+      const start = (booksPage - 1) * ITEMS_PER_PAGE;
+      const pageItems = booksData.slice(start, start + ITEMS_PER_PAGE);
+      
+      let html = '';
+      for (let i = 0; i < ITEMS_PER_PAGE; i++) {
+        const book = pageItems[i];
+        if (book) {
+          html += `
+            <div class="media-item" data-type="book" data-id="${book.id}">
+              <div class="media-cover">
+                <img src="${book.cover}" alt="${book.title}" loading="lazy">
+              </div>
+              <div class="media-info">
+                <div class="media-title">${book.title}</div>
+                <div class="media-meta">${book.author} • ${book.year} • ${getRating(book.rating)}/10</div>
+              </div>
+            </div>
+          `;
+        } else {
+          html += `<div class="media-item" style="opacity:0; pointer-events:none; visibility:hidden;">
+            <div class="media-cover" style="opacity:0;"></div>
+            <div class="media-info">
+              <div class="media-title" style="opacity:0;"> </div>
+              <div class="media-meta" style="opacity:0;"> </div>
+            </div>
+          </div>`;
+        }
+      }
+      container.innerHTML = html;
+      renderBooksPagination();
+    }
+    
+    // Пагинация для фильмов
+    function renderFilmsPagination() {
+      const container = document.getElementById('filmsPagination');
+      if (!container) return;
+      
+      if (filmsTotalPages <= 1) { container.innerHTML = ''; return; }
+      
+      const buttons = getPaginationButtons(filmsPage, filmsTotalPages);
+      container.innerHTML = buttons.map(btn => {
+        if (btn.type === 'page') {
+          return `<button class="pagination-btn ${filmsPage === btn.value ? 'active' : ''}" data-page="${btn.value}">${btn.label}</button>`;
+        } else {
+          return `<button class="pagination-btn pagination-arrow" data-action="${btn.value}">${btn.label}</button>`;
+        }
+      }).join('');
+      
+      container.querySelectorAll('.pagination-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const page = btn.dataset.page;
+          const action = btn.dataset.action;
+          if (page) { filmsPage = parseInt(page); renderFilms(); }
+          else if (action === 'prev' && filmsPage > 1) { filmsPage--; renderFilms(); }
+          else if (action === 'next' && filmsPage < filmsTotalPages) { filmsPage++; renderFilms(); }
+        });
+      });
+    }
+    
+    // Пагинация для книг
+    function renderBooksPagination() {
+      const container = document.getElementById('booksPagination');
+      if (!container) return;
+      
+      if (booksTotalPages <= 1) { container.innerHTML = ''; return; }
+      
+      const buttons = getPaginationButtons(booksPage, booksTotalPages);
+      container.innerHTML = buttons.map(btn => {
+        if (btn.type === 'page') {
+          return `<button class="pagination-btn ${booksPage === btn.value ? 'active' : ''}" data-page="${btn.value}">${btn.label}</button>`;
+        } else {
+          return `<button class="pagination-btn pagination-arrow" data-action="${btn.value}">${btn.label}</button>`;
+        }
+      }).join('');
+      
+      container.querySelectorAll('.pagination-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const page = btn.dataset.page;
+          const action = btn.dataset.action;
+          if (page) { booksPage = parseInt(page); renderBooks(); }
+          else if (action === 'prev' && booksPage > 1) { booksPage--; renderBooks(); }
+          else if (action === 'next' && booksPage < booksTotalPages) { booksPage++; renderBooks(); }
+        });
+      });
+    }
+    
+    // Вкладки
+    function setupTabs() {
+      const filmTab = document.querySelector('#memoriaPanel .tab-btn[data-tab="films"]');
+      const bookTab = document.querySelector('#memoriaPanel .tab-btn[data-tab="books"]');
+      const filmsDiv = document.getElementById('filmsTab');
+      const booksDiv = document.getElementById('booksTab');
+      if (filmTab && filmsDiv && booksDiv) {
+        filmTab.addEventListener('click', () => {
+          filmTab.classList.add('active');
+          bookTab.classList.remove('active');
+          filmsDiv.classList.add('active');
+          booksDiv.classList.remove('active');
+          // Перерендер при смене вкладки
+          renderFilms();
+        });
+      }
+      if (bookTab && filmsDiv && booksDiv) {
+        bookTab.addEventListener('click', () => {
+          bookTab.classList.add('active');
+          filmTab.classList.remove('active');
+          booksDiv.classList.add('active');
+          filmsDiv.classList.remove('active');
+          // Перерендер при смене вкладки
+          renderBooks();
+        });
+      }
+    }
+    
+    // Модальное окно
+    const mediaModal = document.getElementById('mediaModal');
+    const modalCover = document.getElementById('modalCover');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalYear = document.getElementById('modalYear');
+    const modalRating = document.getElementById('modalRating');
+    const modalReview = document.getElementById('modalReview');
+    
+    function showDetails(type, id) {
+      let item;
+      if (type === 'film') {
+        item = filmsData.find(f => f.id === id);
+      } else {
+        item = booksData.find(b => b.id === id);
+      }
+      if (!item) return;
+      
+      modalCover.innerHTML = `<img src="${item.cover}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover; border-radius:6px;">`;
+      modalTitle.textContent = item.title;
+      modalYear.textContent = type === 'film' ? `${item.year}` : `${item.author} • ${item.year}`;
+      modalRating.textContent = getRating(item.rating) + '/10';
+      modalReview.textContent = item.review;
+      mediaModal.classList.add('show');
+    }
+    
+    function closeModal() {
+      if (mediaModal) mediaModal.classList.remove('show');
+    }
+    
+    // События
+    document.addEventListener('click', (e) => {
+      const mediaItem = e.target.closest('.media-item');
+      const panel = document.getElementById('memoriaPanel');
+      if (mediaItem && panel && panel.classList.contains('show') && mediaItem.style.opacity !== '0') {
+        showDetails(mediaItem.dataset.type, parseInt(mediaItem.dataset.id));
+      }
+    });
+    
+    const closeModalBtn = document.getElementById('closeMediaModal');
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (mediaModal) {
+      mediaModal.addEventListener('click', (e) => { if (e.target === mediaModal) closeModal(); });
+    }
+    
+    const closeMemoria = document.getElementById('closeMemoria');
+    if (closeMemoria) {
+      const newCloseBtn = closeMemoria.cloneNode(true);
+      closeMemoria.parentNode.replaceChild(newCloseBtn, closeMemoria);
+      
+      newCloseBtn.addEventListener('click', () => {
+        if (typeof closeAnyPanel === 'function') {
+          closeAnyPanel('memoriaPanel');
+        }
+      });
+    }
+
+    // Добавляем обработчик курсора для closeMemoria (так как он создан динамически)
+    const closeMemoriaEl = document.getElementById('closeMemoria');
+    if (closeMemoriaEl) {
+      closeMemoriaEl.addEventListener('mouseenter', () => {
+        const cursor = document.getElementById('customCursor');
+        if (cursor) cursor.classList.add('hover');
+      });
+      closeMemoriaEl.addEventListener('mouseleave', () => {
+        const cursor = document.getElementById('customCursor');
+        if (cursor) cursor.classList.remove('hover');
+      });
+    }
+    
+    // ЗАПУСК
+    renderFilms();
+    renderBooks();
+    setupTabs();
+  }
+})();
 </script>
 </body>
 </html>
