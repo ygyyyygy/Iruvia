@@ -12,22 +12,20 @@
   GENERAL STYLES
   ================================================================ */
 html {
-  overflow-x: hidden; 
+  overflow-x: hidden;
+  overflow-y: auto;
   scroll-behavior: smooth;
-  scrollbar-width: none;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   background: #000;
   color: #fff;
   font-family: 'Georgia', serif; 
-  overflow: hidden;
+  overflow-x: hidden;
   cursor: none !important; 
-  -ms-overflow-style: none;  
 }
-
 body::-webkit-scrollbar {
   display: none; 
 }
@@ -1379,190 +1377,7 @@ body.panel-open #firstView {
   padding-right: 6px;
 }
 
-/* ================================================================
-   MEMORIA — УВЕЛИЧЕННЫЙ РАЗМЕР
-   ================================================================ */
 
-/* Контейнер панели */
-#memoriaContent {
-  background: rgba(8, 8, 12, 0.92) !important;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
-  max-width: 680px;
-  padding: 32px 40px;
-}
-
-/* Заголовок */
-#memoriaContent .section-title {
-  font-size: 34px;
-  letter-spacing: 8px;
-  font-weight: 400;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-  margin-bottom: 8px;
-}
-
-#memoriaContent .gui-subtitle {
-  font-size: 14px;
-  letter-spacing: 4px;
-  color: #777;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 18px;
-  margin-bottom: 24px;
-}
-
-/* Вкладки */
-.memoria-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  margin-bottom: 28px;
-}
-
-.tab-btn {
-  background: transparent;
-  border: none;
-  color: #666;
-  font-size: 18px;
-  font-family: 'Georgia', serif;
-  letter-spacing: 4px;
-  cursor: none;
-  padding: 8px 0;
-  transition: all 0.25s ease;
-}
-
-.tab-btn:hover {
-  color: #bbb;
-}
-
-.tab-btn.active {
-  color: #fff;
-}
-
-.tab-btn.active::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 2px;
-  background: #fff;
-  box-shadow: 0 0 6px #fff;
-}
-
-/* Сетка списка — фиксированная высота */
-.media-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 400px;
-  max-height: 440px;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-.media-grid::-webkit-scrollbar {
-  width: 4px;
-}
-
-.media-grid::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.media-grid::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-/* Карточка — увеличенная */
-.media-item {
-  background: transparent;
-  border-radius: 0;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  cursor: none;
-  transition: all 0.25s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.media-item:hover {
-  background: rgba(255, 255, 255, 0.03);
-  transform: translateX(6px);
-  border-bottom-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Обложка — больше */
-.media-cover {
-  width: 56px;
-  height: 80px;
-  background: rgba(20, 20, 25, 0.6);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  box-shadow: none;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-/* Текст — крупнее */
-.media-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #eee;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-
-.media-meta {
-  font-size: 13px;
-  color: #777;
-  letter-spacing: 0.5px;
-}
-
-/* Пагинация */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.pagination-btn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #bbb;
-  font-size: 14px;
-  min-width: 36px;
-  height: 36px;
-  padding: 0 10px;
-  border-radius: 8px;
-  cursor: none;
-  transition: all 0.2s ease;
-  font-family: 'Georgia', serif;
-}
-
-.pagination-btn:hover:not(:disabled) {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-.pagination-btn.active {
-  border-color: rgba(255, 255, 255, 0.7);
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.pagination-arrow {
-  font-size: 16px;
-}
 
 /* ================================================================
    МОДАЛЬНОЕ ОКНО — ИСПРАВЛЕННАЯ ВЕРСИЯ
@@ -1697,7 +1512,407 @@ body.panel-open #firstView {
   height: 100%;
   object-fit: cover;
 }
+/* ================================================================
+   MEMORIA ПРОСТАЯ ВЕРСИЯ
+   ================================================================ */
+.memoria-simple-card {
+  background: rgba(20, 20, 30, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  padding: 2rem 2.5rem;
+  text-align: center;
+  cursor: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: 140px;
+}
 
+.memoria-simple-card:hover {
+  transform: translateY(-8px);
+  background: rgba(40, 40, 55, 0.5);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ================================================================
+   MEMORIA - РАБОЧАЯ ВЕРСИЯ (ЕДИНСТВЕННАЯ)
+   ================================================================ */
+#memoriaPanel {
+  background: transparent !important;
+}
+
+#memoriaContent {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding: 20px;
+  background: transparent !important;
+}
+
+#memoriaPanel .infoContent {
+  background: transparent !important;
+}
+
+.memoria-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.memoria-title {
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #F0F0F0;
+}
+
+.memoria-sub {
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: #888;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.memoria-type-switch {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.memoria-type-btn {
+  background: rgba(30, 30, 45, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 1.8rem;
+  border-radius: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ccc;
+  cursor: none;
+  transition: all 0.25s ease;
+}
+
+.memoria-type-btn.active {
+  background: rgba(168, 85, 247, 0.4);
+  border-color: #A855F7;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.memoria-type-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(168, 85, 247, 0.3);
+}
+
+.memoria-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.memoria-item-card {
+  display: flex;
+  gap: 1rem;
+  background: rgba(20, 20, 30, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  cursor: none;
+}
+
+.memoria-item-card:hover {
+  transform: translateX(8px);
+  background: rgba(50, 50, 70, 0.5);
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.memoria-item-cover {
+  width: 60px;
+  height: 85px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.memoria-item-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memoria-item-info {
+  flex: 1;
+}
+
+.memoria-item-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.memoria-item-meta {
+  font-size: 0.7rem;
+  color: #aaa;
+  margin-bottom: 6px;
+}
+
+.memoria-item-review {
+  font-size: 0.75rem;
+  color: #bbb;
+  line-height: 1.3;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
+#closeMemoria {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 28px;
+  color: rgba(255,255,255,0.6);
+  cursor: none;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+#closeMemoria:hover {
+  transform: scale(1.2);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* ================================================================
+   ФИКС СКРОЛЛА
+   ================================================================ */
+html, body {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+body {
+  overflow-y: auto !important;
+  position: relative !important;
+}
+
+#secondView {
+  position: relative !important;
+  min-height: 100vh !important;
+  height: auto !important;
+}
+
+#secondView.visible {
+  position: relative !important;
+}
+
+#guisWrapper {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  margin-top: 9%;
+}
+
+#memoriaPanel .memoria-items {
+  margin-bottom: 100px !important;
+}
+
+/* Убедимся, что панели не блокируют скролл */
+.infoPanel {
+  overflow-y: auto !important;
+}
+
+/* ================================================================
+   СКРОЛЛ ТОЛЬКО В MEMORIA, НА СТРАНИЦЕ СКРОЛЛА НЕТ
+   ================================================================ */
+
+/* Блокируем скролл на всей странице */
+html, body {
+  overflow: hidden !important;
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
+#secondView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden !important;
+}
+
+/* Контент Memoria может быть любой высоты — скролл появится сам */
+#memoriaPanel #memoriaContent {
+  overflow-y: visible !important;
+  height: auto !important;
+  min-height: auto !important;
+}
+
+/* Остальные панели — без скролла */
+.infoPanel:not(#memoriaPanel) {
+  overflow: hidden !important;
+}
+
+/* ================================================================
+   СКРОЛЛ В MEMORIA НЕВИДИМЫЙ
+   ================================================================ */
+#memoriaPanel {
+  overflow-y: auto !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+  display: block !important;
+}
+
+#memoriaPanel::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari/Opera */
+}
+
+/* Также для внутреннего контейнера, если нужно */
+#memoriaPanel #memoriaContent {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+#memoriaPanel #memoriaContent::-webkit-scrollbar {
+  display: none !important;
+}
+
+
+/* ================================================================
+   УВЕЛИЧЕННЫЕ ПАНЕЛИ MEMORIA
+   ================================================================ */
+
+/* Основная панель — шире */
+#memoriaPanel {
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  display: block !important;
+  background: transparent !important;
+}
+
+#memoriaPanel::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Контент — больше ширина */
+#memoriaContent {
+  max-width: 900px !important;
+  width: 85% !important;
+  margin: 0 auto !important;
+  padding: 40px !important;
+  background: transparent !important;
+  display: block !important;
+}
+
+/* Заголовок — крупнее */
+.memoria-title {
+  font-size: 4rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 6px !important;
+  color: #F0F0F0 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.memoria-sub {
+  font-size: 1rem !important;
+  letter-spacing: 6px !important;
+  color: #999 !important;
+  margin-top: 0.5rem !important;
+}
+
+/* Кнопки переключения — шире и больше */
+.memoria-type-btn {
+  padding: 0.8rem 2.5rem !important;
+  font-size: 1.2rem !important;
+  min-width: 160px !important;
+}
+
+/* Карточки — шире */
+.memoria-item-card {
+  padding: 1rem 1.2rem !important;
+  gap: 1.2rem !important;
+}
+
+/* Обложка — больше */
+.memoria-item-cover {
+  width: 80px !important;
+  height: 110px !important;
+}
+
+/* Текст — крупнее */
+.memoria-item-title {
+  font-size: 1.3rem !important;
+  margin-bottom: 6px !important;
+}
+
+.memoria-item-meta {
+  font-size: 0.85rem !important;
+  margin-bottom: 8px !important;
+}
+
+.memoria-item-review {
+  font-size: 0.9rem !important;
+  line-height: 1.4 !important;
+}
+
+/* Отступы между карточками */
+.memoria-items {
+  gap: 1.5rem !important;
+}
+
+/* Расстояние между элементами */
+.memoria-header {
+  margin-bottom: 2.5rem !important;
+}
+
+.memoria-type-switch {
+  gap: 2rem !important;
+  margin-bottom: 2.5rem !important;
+}
+
+/* Пустое сообщение */
+.empty-message {
+  font-size: 1.1rem !important;
+  padding: 3rem !important;
+}
+
+
+/* ================================================================
+   ЭФФЕКТ ПОКАЧИВАНИЯ ДЛЯ ВСЕЙ ПАНЕЛИ MEMORIA
+   ================================================================ */
+#memoriaPanel.show {
+  animation: memoriaFloat 5s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes memoriaFloat {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.3deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
   </style>
 </head>
 <body>
@@ -1852,30 +2067,27 @@ body.panel-open #firstView {
     </div>
   </div>
 
-  <!-- MEMORIA PANEL (фильмы и книги) -->
+  <!-- MEMORIA PANEL -->
   <div id="memoriaPanel" class="infoPanel">
-    <div id="memoriaContent" class="infoContent" style="max-width: 650px;">
-      <span id="closeMemoria">×</span>
-      <div class="section-title">📜 Memoria</div>
-      <div class="gui-subtitle">quod spectavi — quod legi</div>
+    <div id="memoriaContent">
       
-      <!-- Вкладки -->
-      <div class="memoria-tabs">
-        <button class="tab-btn active" data-tab="films">🎬 Pelliculae</button>
-        <button class="tab-btn" data-tab="books">📖 Libri</button>
+      <!-- ЗАГОЛОВОК -->
+      <div class="memoria-header">
+        <div class="memoria-title">Memoria</div>
+        <div class="memoria-sub">quod spectavi — quod legi</div>
       </div>
       
-      <!-- Фильмы -->
-      <div id="filmsTab" class="tab-content active">
-        <div class="media-grid" id="filmsList"></div>
-        <div class="pagination" id="filmsPagination"></div>
+      <!-- КНОПКИ -->
+      <div class="memoria-type-switch">
+        <button class="memoria-type-btn active" data-type="films">Pelliculae</button>
+        <button class="memoria-type-btn" data-type="books">Libri</button>
       </div>
       
-      <!-- Книги -->
-      <div id="booksTab" class="tab-content">
-        <div class="media-grid" id="booksList"></div>
-        <div class="pagination" id="booksPagination"></div>
+      <!-- КОНТЕЙНЕР ДЛЯ КАРТОЧЕК -->
+      <div id="memoriaItemsContainer" class="memoria-items">
+        <div class="empty-message">✨ загрузка...</div>
       </div>
+      
     </div>
   </div>
 
@@ -2084,7 +2296,7 @@ if (!isMobile) {
   }
   animateCursor();
 
-  const interactiveElements = document.querySelectorAll('.smallGui, #infoButton, #closeModal, #floatingWrapper, .social-icon, #closeContact, #closeWebsites, #closeDesign, #closePortfolio, #closeMemoria, .color-circle, .project-card, .send-btn, .media-item, .tab-btn, .modal-close');
+  const interactiveElements = document.querySelectorAll('.smallGui, #infoButton, #closeModal, #floatingWrapper, .social-icon, #closeContact, #closeWebsites, #closeDesign, #closePortfolio, #closeMemoria, .color-circle, .project-card, .send-btn, .media-item, .tab-btn, .modal-close, .memoria-item-card');
   interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => customCursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => customCursor.classList.remove('hover'));
@@ -2604,30 +2816,47 @@ function bindSmallGuiClicks() {
 bindSmallGuiClicks();
 
 // 6. Wheel и touch для возврата из панелей
+// window.addEventListener('wheel', (e) => {
+//   if (Date.now() < wheelCooldownUntil) return;
+//   if (!scrollingEnabled || !hasEnteredContactView) return;
+//   if (e.deltaY < 0) {
+//     exitContactView();
+//     wheelCooldownUntil = Date.now() + 900;
+//   }
+// }, { passive: true });
+
+// let touchStartY_contact = 0;
+// window.addEventListener('touchstart', (e) => {
+//   if (!hasEnteredContactView) return;
+//   touchStartY_contact = e.touches[0].clientY;
+// }, { passive: true });
+
+// window.addEventListener('touchmove', (e) => {
+//   if (!scrollingEnabled || !hasEnteredContactView) return;
+//   const touchEndY = e.touches[0].clientY;
+//   const diff = touchStartY_contact - touchEndY;
+//   if (Math.abs(diff) > 50) {
+//     if (diff < 0) {
+//       exitContactView();
+//     }
+//     touchStartY_contact = touchEndY;
+//   }
+// }, { passive: true });
+
+// 6. Wheel и touch для возврата из панелей (КРОМЕ MEMORIA)
 window.addEventListener('wheel', (e) => {
+  // ПРОВЕРКА НА MEMORIA
+  const memoriaPanel = document.getElementById('memoriaPanel');
+  if (memoriaPanel && memoriaPanel.classList.contains('show')) {
+    // Если Memoria открыта — ничего не делаем, не мешаем её собственному обработчику
+    return;
+  }
+  
   if (Date.now() < wheelCooldownUntil) return;
   if (!scrollingEnabled || !hasEnteredContactView) return;
   if (e.deltaY < 0) {
     exitContactView();
     wheelCooldownUntil = Date.now() + 900;
-  }
-}, { passive: true });
-
-let touchStartY_contact = 0;
-window.addEventListener('touchstart', (e) => {
-  if (!hasEnteredContactView) return;
-  touchStartY_contact = e.touches[0].clientY;
-}, { passive: true });
-
-window.addEventListener('touchmove', (e) => {
-  if (!scrollingEnabled || !hasEnteredContactView) return;
-  const touchEndY = e.touches[0].clientY;
-  const diff = touchStartY_contact - touchEndY;
-  if (Math.abs(diff) > 50) {
-    if (diff < 0) {
-      exitContactView();
-    }
-    touchStartY_contact = touchEndY;
   }
 }, { passive: true });
 
@@ -2949,514 +3178,396 @@ function startAudioOnFirstClick() {
 document.addEventListener('click', startAudioOnFirstClick);
 
 // ================================================================
-// MEMORIA: ПАГИНАЦИЯ (1 2 ▶ → 1 2 3 ▶ → ◀ 2 3 4 ▶)
+// MEMORIA - ДАННЫЕ (ГЛОБАЛЬНЫЕ)
 // ================================================================
+const filmsDataGlobal = [
+  { 
+    id: 1, 
+    title: "Пять ночей с Фредди", 
+    year: 2023, 
+    rating: "4.0",
+    review: "Мшка фрд",
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10893610/006f4e12-edf3-44b4-8eae-ff231b2fab7d/300x450"
+  },
+  { 
+    id: 2, 
+    title: "Пять ночей с Фредди 2", 
+    year: 2025, 
+    rating: "4.2", 
+    review: "Мшка фрд 2", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10812607/5f6f58dc-a8d0-43f8-8216-b9afaad59e7f/300x450"
+  },
+  { 
+    id: 3, 
+    title: "Оно", 
+    year: 2017, 
+    rating: "2.0", 
+    review: "Теперь я ненавижу клоунов :)", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/6201401/c2554fb1-0c11-49b7-8c99-3a32e696b2ab/300x450"
+  },
+  { 
+    id: 4, 
+    title: "Кунг-фу Панда", 
+    year: 2008, 
+    rating: "5.0",
+    review: "На добром вроде", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/a9c4698d-7eea-4fe8-8624-4c536c09f7fd/300x450"
+  },
+  { 
+    id: 5, 
+    title: "Кунг-фу Панда 2", 
+    year: 2011, 
+    rating: "5.5",
+    review: "Прикольна", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1898899/6f8602bd-3058-40f2-911b-e16b68a634b6/300x450"
+  },
+  { 
+    id: 6, 
+    title: "Улыбка 2", 
+    year: 2024,
+    rating: "6.1",
+    review: "Лор по мне интересный", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10703959/63594e16-fbe4-4f03-a9f9-922dff5210f3/300x450"
+  },
+  { 
+    id: 7, 
+    title: "Не говори никому", 
+    year: 2024, 
+    rating: "6.6",
+    review: "Прикольна", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/4486454/3ff2376a-ea2d-412f-803a-d1bffbb4d4ca/300x450"
+  },
+  { 
+    id: 8, 
+    title: "Дитя тьмы первая жертва", 
+    year: 2024, 
+    rating: "5.3",
+    review: "Забыл че там", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/5df017f1-4f1e-412e-8010-21c232ee2384/300x450"
+  },
+  { 
+    id: 9, 
+    title: "Пункт назначения: Узы крови", 
+    year: 2025, 
+    rating: "5.1",
+    review: "Тож забыл че там", 
+    cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10703859/b7bec2e0-27ca-4acd-9f3c-52e40f85f52b/300x450"
+  },
+  { 
+    id: 10, 
+    title: "Лето 84", 
+    year: 2017, 
+    rating: "6.1",
+    review: "Мне зашло", 
+    cover: "https://avatars.mds.yandex.net/get-ott/12808873/2a0000019852477ca5dd357f61c68d9566bf/300x450"
+  }
+];
+
+const booksDataGlobal = [
+  { 
+    id: 1, 
+    title: "Белые ночи", 
+    author: "Фёдор Достоевский", 
+    year: 1848, 
+    rating: "7.2", 
+    review: "Как первая полностью прочитанная книжка, мне понравилось, читалось на одном слоге", 
+    cover: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Dostoyevski_-_White_Nights_%281865%29.jpg/330px-Dostoyevski_-_White_Nights_%281865%29.jpg"
+  }
+];
 
 // ================================================================
-// MEMORIA: ПАГИНАЦИЯ ПО ТАБЛИЦЕ
+// MEMORIA - ФИЛЬМЫ И КНИГИ
 // ================================================================
-
-(function() {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMemoria);
-  } else {
-    initMemoria();
+function initMemoriaFull() {
+  const container = document.getElementById('memoriaItemsContainer');
+  if (!container) return;
+  
+  const typeBtns = document.querySelectorAll('.memoria-type-btn');
+  const modal = document.getElementById('mediaModal');
+  const modalCover = document.getElementById('modalCover');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalYear = document.getElementById('modalYear');
+  const modalRating = document.getElementById('modalRating');
+  const modalReview = document.getElementById('modalReview');
+  
+  let currentType = 'films';
+  
+  function getRating(rating) {
+    return rating;
   }
   
-  function initMemoria() {
+  function renderItems() {
+    const data = currentType === 'films' ? filmsDataGlobal : booksDataGlobal;
+    
+    if (!data || data.length === 0) {
+      container.innerHTML = '<div class="empty-message">✨ пока ничего нет ✨</div>';
+      return;
+    }
+    
+    container.innerHTML = '';
+    
+    data.forEach(item => {
+      const isFilm = currentType === 'films';
+      const card = document.createElement('div');
+      card.className = 'memoria-item-card';
+      card.dataset.id = item.id;
+      card.dataset.type = currentType;
+      
+      let metaHtml = '';
+      if (isFilm) {
+        metaHtml = `${item.year} • ⭐ ${getRating(item.rating)}/10`;
+      } else {
+        metaHtml = `${item.author} • ${item.year} • ⭐ ${getRating(item.rating)}/10`;
+      }
+      
+      card.innerHTML = `
+        <div class="memoria-item-cover">
+          <img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="this.src='https://picsum.photos/id/100/60/85'">
+        </div>
+        <div class="memoria-item-info">
+          <div class="memoria-item-title">${item.title}</div>
+          <div class="memoria-item-meta">${metaHtml}</div>
+          <div class="memoria-item-review">${item.review}</div>
+        </div>
+      `;
+      
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        modalCover.innerHTML = `<img src="${item.cover}" style="width:100%; height:100%; object-fit:cover; border-radius:6px;">`;
+        modalTitle.textContent = item.title;
+        modalYear.textContent = isFilm ? `${item.year}` : `${item.author} • ${item.year}`;
+        modalRating.textContent = getRating(item.rating) + '/10';
+        modalReview.textContent = item.review;
+        modal.classList.add('show');
+      });
+      
+      container.appendChild(card);
+    });
+  }
+  
+  function switchType(type) {
+    currentType = type;
+    typeBtns.forEach(btn => {
+      if (btn.dataset.type === type) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    renderItems();
+  }
+  
+  typeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.type === currentType) return;
+      switchType(btn.dataset.type);
+    });
+  });
+  
+  renderItems();
+}
+
+// Запускаем после загрузки DOM
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMemoriaFull);
+} else {
+  initMemoriaFull();
+}
+
+// ================================================================
+// УМНЫЙ СКРОЛЛ ДЛЯ MEMORIA (ВЫХОД ПО ПОВТОРНОМУ СКРОЛЛУ ВВЕРХ С ЗАДЕРЖКОЙ)
+// ================================================================
+(function() {
     const memoriaPanel = document.getElementById('memoriaPanel');
     if (!memoriaPanel) return;
     
-    // ДАННЫЕ ФИЛЬМОВ
-    const filmsData = [
-      { 
-        id: 1, 
-        title: "Пять ночей с Фредди", 
-        year: 2023, 
-        rating: 4,
-        review: "Мшка фрд",
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10893610/006f4e12-edf3-44b4-8eae-ff231b2fab7d/300x450"
-      },
-      { 
-        id: 2, 
-        title: "Пять ночей с Фредди 2", 
-        year: 2025, 
-        rating: 4.2, 
-        review: "Мшка фрд 2", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10812607/5f6f58dc-a8d0-43f8-8216-b9afaad59e7f/300x450"
-      },
-      { 
-        id: 3, 
-        title: "Оно", 
-        year: 2017, 
-        rating: 2, 
-        review: "Теперь я ненавижу клоунов :)", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/6201401/c2554fb1-0c11-49b7-8c99-3a32e696b2ab/300x450"
-      },
-      { 
-        id: 4, 
-        title: "Кунг-фу Панда", 
-        year: 2008, 
-        rating: "пяточок",
-        review: "На добром вроде", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/a9c4698d-7eea-4fe8-8624-4c536c09f7fd/300x450"
-      },
-      { 
-        id: 5, 
-        title: "Кунг-фу Панда 2", 
-        year: 2011, 
-        rating: 5.5,
-        review: "Прикольна", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1898899/6f8602bd-3058-40f2-911b-e16b68a634b6/300x450"
-      },
-      { 
-        id: 6, 
-        title: "Улыбка 2", 
-        year: 2024,
-        rating: 6.1,
-        review: "Лор по мне интересный", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10703959/63594e16-fbe4-4f03-a9f9-922dff5210f3/300x450"
-      },
-      { 
-        id: 7, 
-        title: "Не говори никому", 
-        year: 2024, 
-        rating: 6.6,
-        review: "Прикольна", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/4486454/3ff2376a-ea2d-412f-803a-d1bffbb4d4ca/300x450"
-      },
-      { 
-        id: 8, 
-        title: "Дитя тьмы первая жертва", 
-        year: 2024, 
-        rating: 5.3,
-        review: "Забыл че там", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/4303601/5df017f1-4f1e-412e-8010-21c232ee2384/300x450"
-      },
-      { 
-        id: 9, 
-        title: "Пункт назначения: Узы крови", 
-        year: 2025, 
-        rating: 5.1,
-        review: "Тож забыл че там, но вроде там всем не очень приятно была", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10703859/b7bec2e0-27ca-4acd-9f3c-52e40f85f52b/300x450"
-      },
-      { 
-        id: 10, 
-        title: "Лето 84", 
-        year: 2017, 
-        rating: 6.1,
-        review: "Мне зашло", 
-        cover: "https://avatars.mds.yandex.net/get-ott/12808873/2a0000019852477ca5dd357f61c68d9566bf/300x450"
-      },
-      { 
-        id: 11, 
-        title: "Верни ее из мертвых", 
-        year: 2025, 
-        rating: 4.3,
-        review: "Бык тупогуб", 
-        cover: "https://avatars.mds.yandex.net/get-ott/223007/2a00000198a3933a1b0acdd96205cb6be100/300x450"
-      },
-      { 
-        id: 12, 
-        title: "Дожить до рассвета", 
-        year: 2025, 
-        rating: 6,
-        review: "Как лето 84, кайфарики", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10900341/66b4ea0f-df7e-4291-ba6c-64702cb35e07/300x450"
-      },
-      { 
-        id: 13, 
-        title: "Паранойя", 
-        year: 2007, 
-        rating: 4.9,
-        review: "Cool", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/65b39085-6fc4-4923-846a-315232de5bca/300x450"
-      },
-      { 
-        id: 14, 
-        title: "Заклятье. Дом 32", 
-        year: 2020, 
-        rating: 3.1,
-        review: "Shiziki", 
-        cover: "https://avatars.mds.yandex.net/get-ott/12808873/2a00000198537c621ddb0c66ff0938fdb230/300x450"
-      },
-      { 
-        id: 15, 
-        title: "Ужасающий 2", 
-        year: 2022,
-        rating: 3.8,
-        review: "Мясо 20", 
-        cover: "https://avatars.mds.yandex.net/get-ott/2439731/2a0000019853c7141fa1d8019bc1035e8cee/300x450"
-      },
-      { 
-        id: 16, 
-        title: "Ужасающий 3", 
-        year: 2024,
-        rating: 3.8,
-        review: "Мясо 30", 
-        cover: "https://avatars.mds.yandex.net/get-ott/13051577/2a0000019851c6983dff5fc617acd46d4fb3/300x450"
-      },
-      { 
-        id: 17, 
-        title: "Я иду искать", 
-        year: 2019, 
-        rating: 6.2,
-        review: "На одном дыхании смотриться, лайк", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/fbd455e5-4516-4079-9af8-0da26a34f2ba/300x450"
-      },
-      { 
-        id: 18, 
-        title: "Я иду искать 2", 
-        year: 2026, 
-        rating: 6.4,
-        review: "Между первой и второй..", 
-        cover: "https://avatars.mds.yandex.net/get-kinopoisk-image/10900341/34089b83-5b12-414e-b9a5-94c1d81c7d21/300x450"
-      }
-    ];
-
-    // ,
-    //   { 
-    //     id: 19, 
-    //     title: "", 
-    //     year: 0, 
-    //     rating: 0,
-    //     review: "", 
-    //     cover: ""
-    //   }
-
-    // ДАННЫЕ КНИГ
-    const booksData = [
-      { 
-        id: 1, 
-        title: "Белые ночи", 
-        author: "Фёдор Достоевский", 
-        year: 1848, 
-        rating: 7.2, 
-        review: "Как первая полностью прочитанная книжка, мне понравилось, читалось на одном слоге", 
-        cover: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Dostoyevski_-_White_Nights_%281865%29.jpg/330px-Dostoyevski_-_White_Nights_%281865%29.jpg"
-      }
-    ];
-
-    // ,
-    //   { 
-    //     id: 2, 
-    //     title: "", 
-    //     author: "", 
-    //     year: 0, 
-    //     rating: 0, 
-    //     review: "", 
-    //     cover: ""
-    //   }
+    let topReached = false;       // флаг: достигли ли верха
+    let exitReady = false;        // флаг: готовы к выходу
+    let timeoutId = null;         // таймер задержки
+    let lastUpScrollTime = 0;     // время последнего скролла вверх
     
-    const ITEMS_PER_PAGE = 3; // 3 элемента на страницу
-    
-    // Вычисляем количество страниц
-    const filmsTotalPages = Math.ceil(filmsData.length / ITEMS_PER_PAGE); // 4/3 = 2 страницы
-    const booksTotalPages = Math.ceil(booksData.length / ITEMS_PER_PAGE); // 8/3 = 3 страницы
-    
-    let filmsPage = 1;
-    let booksPage = 1;
-    
-    function getRating(rating) {
-      return rating;
+    function closeMemoria() {
+        if (typeof closeAnyPanel === 'function') {
+            closeAnyPanel('memoriaPanel');
+        }
+        resetFlags();
     }
     
-    // Функция пагинации
-    function getPaginationButtons(currentPage, totalPages) {
-      const buttons = [];
-      
-      // Если всего 1 страница — показываем только кнопку "1" (без стрелок)
-      if (totalPages === 1) {
-        buttons.push({ type: 'page', value: 1, label: '1' });
-        return buttons;
-      }
-      
-      if (currentPage === 1) {
-        buttons.push({ type: 'page', value: 1, label: '1' });
-        if (totalPages >= 2) {
-          buttons.push({ type: 'page', value: 2, label: '2' });
-        }
-        if (totalPages > 2) {
-          buttons.push({ type: 'arrow', value: 'next', label: '▶' });
-        }
-      }
-      else if (currentPage === 2 && totalPages === 2) {
-        // Страница 2 из 2: ◀ 1 2
-        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
-        buttons.push({ type: 'page', value: 1, label: '1' });
-        buttons.push({ type: 'page', value: 2, label: '2' });
-      }
-      else if (currentPage === 2 && totalPages === 3) {
-        // Страница 2 из 3: 1 2 3 ▶
-        buttons.push({ type: 'page', value: 1, label: '1' });
-        buttons.push({ type: 'page', value: 2, label: '2' });
-        buttons.push({ type: 'page', value: 3, label: '3' });
-        buttons.push({ type: 'arrow', value: 'next', label: '▶' });
-      }
-      else if (currentPage === totalPages - 1 && totalPages > 2) {
-        // Предпоследняя страница: ◀ X X+1 X+2 ▶
-        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
-        buttons.push({ type: 'page', value: currentPage - 1, label: (currentPage - 1).toString() });
-        buttons.push({ type: 'page', value: currentPage, label: currentPage.toString() });
-        buttons.push({ type: 'page', value: currentPage + 1, label: (currentPage + 1).toString() });
-        buttons.push({ type: 'arrow', value: 'next', label: '▶' });
-      }
-      else if (currentPage === totalPages) {
-        // Последняя страница: ◀ X X+1 X+2
-        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
-        if (totalPages >= 3) {
-          buttons.push({ type: 'page', value: totalPages - 2, label: (totalPages - 2).toString() });
-        }
-        if (totalPages >= 2) {
-          buttons.push({ type: 'page', value: totalPages - 1, label: (totalPages - 1).toString() });
-        }
-        buttons.push({ type: 'page', value: totalPages, label: totalPages.toString() });
-      }
-      else {
-        // Середина: ◀ X X+1 X+2 ▶
-        buttons.push({ type: 'arrow', value: 'prev', label: '◀' });
-        buttons.push({ type: 'page', value: currentPage - 1, label: (currentPage - 1).toString() });
-        buttons.push({ type: 'page', value: currentPage, label: currentPage.toString() });
-        buttons.push({ type: 'page', value: currentPage + 1, label: (currentPage + 1).toString() });
-        buttons.push({ type: 'arrow', value: 'next', label: '▶' });
-      }
-      
-      return buttons;
+    function resetFlags() {
+        topReached = false;
+        exitReady = false;
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = null;
     }
     
-    // Рендер фильмов
-    function renderFilms() {
-      const container = document.getElementById('filmsList');
-      if (!container) return;
-      const start = (filmsPage - 1) * ITEMS_PER_PAGE;
-      const pageItems = filmsData.slice(start, start + ITEMS_PER_PAGE);
-      
-      let html = '';
-      for (let i = 0; i < ITEMS_PER_PAGE; i++) {
-        const film = pageItems[i];
-        if (film) {
-          html += `
-            <div class="media-item" data-type="film" data-id="${film.id}">
-              <div class="media-cover">
-                <img src="${film.cover}" alt="${film.title}" loading="lazy">
-              </div>
-              <div class="media-info">
-                <div class="media-title">${film.title}</div>
-                <div class="media-meta">${film.year} • ${getRating(film.rating)}/10</div>
-              </div>
-            </div>
-          `;
+    // Следим за скроллом внутри панели
+    memoriaPanel.addEventListener('scroll', function() {
+        const isAtTop = memoriaPanel.scrollTop === 0;
+        
+        if (isAtTop) {
+            if (!topReached) {
+                topReached = true;
+                exitReady = false;
+                // Таймер: если через 500 мс всё ещё вверху — готовим выход
+                if (timeoutId) clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    if (topReached) {
+                        exitReady = true;
+                    }
+                }, 500);
+            }
         } else {
-          html += `<div class="media-item" style="opacity:0; pointer-events:none; visibility:hidden;">
-            <div class="media-cover" style="opacity:0;"></div>
-            <div class="media-info">
-              <div class="media-title" style="opacity:0;"> </div>
-              <div class="media-meta" style="opacity:0;"> </div>
-            </div>
-          </div>`;
+            // Ушли с верха — сбрасываем
+            resetFlags();
         }
-      }
-      container.innerHTML = html;
-      renderFilmsPagination();
-    }
-    
-    // Рендер книг
-    function renderBooks() {
-      const container = document.getElementById('booksList');
-      if (!container) return;
-      const start = (booksPage - 1) * ITEMS_PER_PAGE;
-      const pageItems = booksData.slice(start, start + ITEMS_PER_PAGE);
-      
-      let html = '';
-      for (let i = 0; i < ITEMS_PER_PAGE; i++) {
-        const book = pageItems[i];
-        if (book) {
-          html += `
-            <div class="media-item" data-type="book" data-id="${book.id}">
-              <div class="media-cover">
-                <img src="${book.cover}" alt="${book.title}" loading="lazy">
-              </div>
-              <div class="media-info">
-                <div class="media-title">${book.title}</div>
-                <div class="media-meta">${book.author} • ${book.year} • ${getRating(book.rating)}/10</div>
-              </div>
-            </div>
-          `;
-        } else {
-          html += `<div class="media-item" style="opacity:0; pointer-events:none; visibility:hidden;">
-            <div class="media-cover" style="opacity:0;"></div>
-            <div class="media-info">
-              <div class="media-title" style="opacity:0;"> </div>
-              <div class="media-meta" style="opacity:0;"> </div>
-            </div>
-          </div>`;
-        }
-      }
-      container.innerHTML = html;
-      renderBooksPagination();
-    }
-    
-    // Пагинация для фильмов
-    function renderFilmsPagination() {
-      const container = document.getElementById('filmsPagination');
-      if (!container) return;
-      
-      const totalPages = Math.ceil(filmsData.length / ITEMS_PER_PAGE);
-      
-      // ВСЕГДА показываем пагинацию, даже если 1 страница
-      const buttons = getPaginationButtons(filmsPage, totalPages);
-      container.innerHTML = buttons.map(btn => {
-        if (btn.type === 'page') {
-          return `<button class="pagination-btn ${filmsPage === btn.value ? 'active' : ''}" data-page="${btn.value}">${btn.label}</button>`;
-        } else {
-          return `<button class="pagination-btn pagination-arrow" data-action="${btn.value}">${btn.label}</button>`;
-        }
-      }).join('');
-      
-      container.querySelectorAll('.pagination-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const page = btn.dataset.page;
-          const action = btn.dataset.action;
-          if (page) { filmsPage = parseInt(page); renderFilms(); }
-          else if (action === 'prev' && filmsPage > 1) { filmsPage--; renderFilms(); }
-          else if (action === 'next' && filmsPage < totalPages) { filmsPage++; renderFilms(); }
-        });
-      });
-    }
-
-    // Пагинация для книг
-    function renderBooksPagination() {
-      const container = document.getElementById('booksPagination');
-      if (!container) return;
-      
-      const totalPages = Math.ceil(booksData.length / ITEMS_PER_PAGE);
-      
-      // ВСЕГДА показываем пагинацию, даже если 1 страница
-      const buttons = getPaginationButtons(booksPage, totalPages);
-      container.innerHTML = buttons.map(btn => {
-        if (btn.type === 'page') {
-          return `<button class="pagination-btn ${booksPage === btn.value ? 'active' : ''}" data-page="${btn.value}">${btn.label}</button>`;
-        } else {
-          return `<button class="pagination-btn pagination-arrow" data-action="${btn.value}">${btn.label}</button>`;
-        }
-      }).join('');
-      
-      container.querySelectorAll('.pagination-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const page = btn.dataset.page;
-          const action = btn.dataset.action;
-          if (page) { booksPage = parseInt(page); renderBooks(); }
-          else if (action === 'prev' && booksPage > 1) { booksPage--; renderBooks(); }
-          else if (action === 'next' && booksPage < totalPages) { booksPage++; renderBooks(); }
-        });
-      });
-    }
-    
-    // Вкладки
-    function setupTabs() {
-      const filmTab = document.querySelector('#memoriaPanel .tab-btn[data-tab="films"]');
-      const bookTab = document.querySelector('#memoriaPanel .tab-btn[data-tab="books"]');
-      const filmsDiv = document.getElementById('filmsTab');
-      const booksDiv = document.getElementById('booksTab');
-      if (filmTab && filmsDiv && booksDiv) {
-        filmTab.addEventListener('click', () => {
-          filmTab.classList.add('active');
-          bookTab.classList.remove('active');
-          filmsDiv.classList.add('active');
-          booksDiv.classList.remove('active');
-          // Перерендер при смене вкладки
-          renderFilms();
-        });
-      }
-      if (bookTab && filmsDiv && booksDiv) {
-        bookTab.addEventListener('click', () => {
-          bookTab.classList.add('active');
-          filmTab.classList.remove('active');
-          booksDiv.classList.add('active');
-          filmsDiv.classList.remove('active');
-          // Перерендер при смене вкладки
-          renderBooks();
-        });
-      }
-    }
-    
-    // Модальное окно
-    const mediaModal = document.getElementById('mediaModal');
-    const modalCover = document.getElementById('modalCover');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalYear = document.getElementById('modalYear');
-    const modalRating = document.getElementById('modalRating');
-    const modalReview = document.getElementById('modalReview');
-    
-    function showDetails(type, id) {
-      let item;
-      if (type === 'film') {
-        item = filmsData.find(f => f.id === id);
-      } else {
-        item = booksData.find(b => b.id === id);
-      }
-      if (!item) return;
-      
-      modalCover.innerHTML = `<img src="${item.cover}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover; border-radius:6px;">`;
-      modalTitle.textContent = item.title;
-      modalYear.textContent = type === 'film' ? `${item.year}` : `${item.author} • ${item.year}`;
-      modalRating.textContent = getRating(item.rating) + '/10';
-      modalReview.textContent = item.review;
-      mediaModal.classList.add('show');
-    }
-    
-    function closeModal() {
-      if (mediaModal) mediaModal.classList.remove('show');
-    }
-    
-    // События
-    document.addEventListener('click', (e) => {
-      const mediaItem = e.target.closest('.media-item');
-      const panel = document.getElementById('memoriaPanel');
-      if (mediaItem && panel && panel.classList.contains('show') && mediaItem.style.opacity !== '0') {
-        showDetails(mediaItem.dataset.type, parseInt(mediaItem.dataset.id));
-      }
     });
     
-    const closeModalBtn = document.getElementById('closeMediaModal');
-    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-    if (mediaModal) {
-      mediaModal.addEventListener('click', (e) => { if (e.target === mediaModal) closeModal(); });
-    }
-    
-    const closeMemoria = document.getElementById('closeMemoria');
-    if (closeMemoria) {
-      const newCloseBtn = closeMemoria.cloneNode(true);
-      closeMemoria.parentNode.replaceChild(newCloseBtn, closeMemoria);
-      
-      newCloseBtn.addEventListener('click', () => {
-        if (typeof closeAnyPanel === 'function') {
-          closeAnyPanel('memoriaPanel');
+    // Обрабатываем колесико мыши
+    memoriaPanel.addEventListener('wheel', function(e) {
+        const isAtTop = memoriaPanel.scrollTop === 0;
+        const isScrollingUp = e.deltaY < 0;
+        const now = Date.now();
+        
+        // Если вверху, скроллим вверх, и готовы к выходу — закрываем
+        if (isAtTop && isScrollingUp && exitReady) {
+            e.preventDefault();
+            closeMemoria();
+            return;
         }
-      });
-    }
+        
+        // Если вверху, скроллим вверх, но ещё не готовы — запоминаем время
+        if (isAtTop && isScrollingUp && !exitReady) {
+            lastUpScrollTime = now;
+        }
+        
+        // Если скроллим вниз или не вверху — сбрасываем готовность
+        if (!isScrollingUp || !isAtTop) {
+            if (!isAtTop) resetFlags();
+        }
+    });
+    
+    // Сброс при открытии панели
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (memoriaPanel.classList.contains('show')) {
+                    setTimeout(() => {
+                        memoriaPanel.scrollTop = 0;
+                        resetFlags();
+                        topReached = true;
+                        // После открытия даём время на осознание
+                        setTimeout(() => { exitReady = true; }, 500);
+                    }, 50);
+                } else {
+                    resetFlags();
+                }
+            }
+        });
+    });
+    
+    observer.observe(memoriaPanel, { attributes: true });
+})();
 
-    // Добавляем обработчик курсора для closeMemoria (так как он создан динамически)
-    const closeMemoriaEl = document.getElementById('closeMemoria');
-    if (closeMemoriaEl) {
-      closeMemoriaEl.addEventListener('mouseenter', () => {
-        const cursor = document.getElementById('customCursor');
-        if (cursor) cursor.classList.add('hover');
-      });
-      closeMemoriaEl.addEventListener('mouseleave', () => {
-        const cursor = document.getElementById('customCursor');
-        if (cursor) cursor.classList.remove('hover');
-      });
+// ================================================================
+// КРЕСТИК МОДАЛЬНОГО ОКНА - ИСПРАВЛЕНИЕ
+// ================================================================
+(function() {
+    // Функция закрытия модального окна
+    function closeMediaModal() {
+        const modal = document.getElementById('mediaModal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
     }
     
-    // ЗАПУСК
-    renderFilms();
-    renderBooks();
-    setupTabs();
-  }
+    // Находим крестик и вешаем обработчик
+    const closeBtn = document.getElementById('closeMediaModal');
+    if (closeBtn) {
+        // Удаляем старые обработчики
+        const newBtn = closeBtn.cloneNode(true);
+        closeBtn.parentNode.replaceChild(newBtn, closeBtn);
+        
+        newBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMediaModal();
+        });
+    }
+    
+    // Закрытие по клику на фон (оверлей)
+    const modal = document.getElementById('mediaModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeMediaModal();
+            }
+        });
+    }
+    
+    // Закрытие по клавише Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('mediaModal');
+            if (modal && modal.classList.contains('show')) {
+                closeMediaModal();
+            }
+        }
+    });
+})();
+
+// ================================================================
+// ПРИНУДИТЕЛЬНЫЙ КУРСОР ДЛЯ ВСЕХ КЛИКАБЕЛЬНЫХ ЭЛЕМЕНТОВ MEMORIA
+// ================================================================
+(function() {
+    function bindCursorToElement(el) {
+        if (!el || el.hasAttribute('data-cursor-bound')) return;
+        el.setAttribute('data-cursor-bound', 'true');
+        
+        el.addEventListener('mouseenter', () => {
+            const cursor = document.getElementById('customCursor');
+            if (cursor) cursor.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+            const cursor = document.getElementById('customCursor');
+            if (cursor) cursor.classList.remove('hover');
+        });
+    }
+    
+    function bindAllMemoriaElements() {
+        // Карточки Memoria
+        document.querySelectorAll('.memoria-item-card, .memoria-type-btn, #closeMemoria, .modal-close').forEach(bindCursorToElement);
+        
+        // Кнопки переключения
+        document.querySelectorAll('.memoria-type-btn').forEach(bindCursorToElement);
+        
+        // Крестик закрытия панели
+        const closeMemoria = document.getElementById('closeMemoria');
+        if (closeMemoria) bindCursorToElement(closeMemoria);
+        
+        // Крестик модального окна
+        const modalClose = document.getElementById('closeMediaModal');
+        if (modalClose) bindCursorToElement(modalClose);
+    }
+    
+    // Запускаем сразу
+    bindAllMemoriaElements();
+    
+    // Наблюдаем за появлением новых карточек
+    const container = document.getElementById('memoriaItemsContainer');
+    if (container) {
+        const observer = new MutationObserver(() => bindAllMemoriaElements());
+        observer.observe(container, { childList: true, subtree: true });
+    }
+    
+    // Также при открытии панели
+    const memoriaPanel = document.getElementById('memoriaPanel');
+    if (memoriaPanel) {
+        const panelObserver = new MutationObserver(() => {
+            if (memoriaPanel.classList.contains('show')) {
+                setTimeout(bindAllMemoriaElements, 100);
+            }
+        });
+        panelObserver.observe(memoriaPanel, { attributes: true });
+    }
 })();
 </script>
 <!-- Canvas для эффекта "феерверк за курсором" -->
