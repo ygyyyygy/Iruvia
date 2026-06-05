@@ -3166,10 +3166,13 @@ document.addEventListener('click', startAudioOnFirstClick);
     function getPaginationButtons(currentPage, totalPages) {
       const buttons = [];
       
-      if (totalPages === 1) return buttons;
+      // Если всего 1 страница — показываем только кнопку "1" (без стрелок)
+      if (totalPages === 1) {
+        buttons.push({ type: 'page', value: 1, label: '1' });
+        return buttons;
+      }
       
       if (currentPage === 1) {
-        // Страница 1: 1 2 ▶ (если есть вторая страница)
         buttons.push({ type: 'page', value: 1, label: '1' });
         if (totalPages >= 2) {
           buttons.push({ type: 'page', value: 2, label: '2' });
@@ -3299,9 +3302,10 @@ document.addEventListener('click', startAudioOnFirstClick);
       const container = document.getElementById('filmsPagination');
       if (!container) return;
       
-      if (filmsTotalPages <= 1) { container.innerHTML = ''; return; }
+      const totalPages = Math.ceil(filmsData.length / ITEMS_PER_PAGE);
       
-      const buttons = getPaginationButtons(filmsPage, filmsTotalPages);
+      // ВСЕГДА показываем пагинацию, даже если 1 страница
+      const buttons = getPaginationButtons(filmsPage, totalPages);
       container.innerHTML = buttons.map(btn => {
         if (btn.type === 'page') {
           return `<button class="pagination-btn ${filmsPage === btn.value ? 'active' : ''}" data-page="${btn.value}">${btn.label}</button>`;
@@ -3317,19 +3321,20 @@ document.addEventListener('click', startAudioOnFirstClick);
           const action = btn.dataset.action;
           if (page) { filmsPage = parseInt(page); renderFilms(); }
           else if (action === 'prev' && filmsPage > 1) { filmsPage--; renderFilms(); }
-          else if (action === 'next' && filmsPage < filmsTotalPages) { filmsPage++; renderFilms(); }
+          else if (action === 'next' && filmsPage < totalPages) { filmsPage++; renderFilms(); }
         });
       });
     }
-    
+
     // Пагинация для книг
     function renderBooksPagination() {
       const container = document.getElementById('booksPagination');
       if (!container) return;
       
-      if (booksTotalPages <= 1) { container.innerHTML = ''; return; }
+      const totalPages = Math.ceil(booksData.length / ITEMS_PER_PAGE);
       
-      const buttons = getPaginationButtons(booksPage, booksTotalPages);
+      // ВСЕГДА показываем пагинацию, даже если 1 страница
+      const buttons = getPaginationButtons(booksPage, totalPages);
       container.innerHTML = buttons.map(btn => {
         if (btn.type === 'page') {
           return `<button class="pagination-btn ${booksPage === btn.value ? 'active' : ''}" data-page="${btn.value}">${btn.label}</button>`;
@@ -3345,7 +3350,7 @@ document.addEventListener('click', startAudioOnFirstClick);
           const action = btn.dataset.action;
           if (page) { booksPage = parseInt(page); renderBooks(); }
           else if (action === 'prev' && booksPage > 1) { booksPage--; renderBooks(); }
-          else if (action === 'next' && booksPage < booksTotalPages) { booksPage++; renderBooks(); }
+          else if (action === 'next' && booksPage < totalPages) { booksPage++; renderBooks(); }
         });
       });
     }
