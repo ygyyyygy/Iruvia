@@ -1913,6 +1913,214 @@ html, body {
     transform: translateY(0px) rotate(0deg);
   }
 }
+
+/* Базовое состояние карточки — скрыта */
+.memoria-item-card {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Карточка видима */
+.memoria-item-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ================================================================
+   АНИМАЦИЯ ПРИ ПЕРЕКЛЮЧЕНИИ ВКЛАДОК
+   ================================================================ */
+.memoria-item-card {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.memoria-item-card.fly-out-left {
+    animation: flyOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+.memoria-item-card.fly-out-right {
+    animation: flyOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes flyOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-150px) rotate(-15deg);
+        pointer-events: none;
+    }
+}
+
+@keyframes flyOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(150px) rotate(15deg);
+        pointer-events: none;
+    }
+}
+
+/* Анимация появления новых карточек */
+.memoria-item-card.fly-in {
+    animation: flyIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+@keyframes flyIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ================================================================
+   3D АНИМАЦИЯ "ВЫЛЕТ НА ЗРИТЕЛЯ"
+   ================================================================ */
+.memoria-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    perspective: 600px;
+}
+
+.memoria-item-card {
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Фильмы улетают влево и на зрителя */
+.memoria-item-card.fly-out-left {
+    animation: flyToViewerLeft 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards !important;
+}
+
+/* Книги улетают вправо и на зрителя */
+.memoria-item-card.fly-out-right {
+    animation: flyToViewerRight 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards !important;
+}
+
+/* Левый вылет — дуга влево и на зрителя */
+@keyframes flyToViewerLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) translateZ(0) rotateY(0deg);
+        filter: blur(0);
+    }
+    40% {
+        transform: translateX(-80px) translateZ(60px) rotateY(-25deg);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-30px) translateZ(300px) rotateY(-45deg) scale(1.8);
+        filter: blur(12px);
+        pointer-events: none;
+    }
+}
+
+/* Правый вылет — дуга вправо и на зрителя */
+@keyframes flyToViewerRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) translateZ(0) rotateY(0deg);
+        filter: blur(0);
+    }
+    40% {
+        transform: translateX(80px) translateZ(60px) rotateY(25deg);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(30px) translateZ(300px) rotateY(45deg) scale(1.8);
+        filter: blur(12px);
+        pointer-events: none;
+    }
+}
+
+/* Появление новых карточек — прилетают из глубины */
+@keyframes flyInFromDepth {
+    0% {
+        opacity: 0;
+        transform: translateZ(-150px) scale(0.7);
+        filter: blur(8px);
+    }
+    50% {
+        transform: translateZ(30px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateZ(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.memoria-item-card.fly-in {
+    animation: flyInFromDepth 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* ================================================================
+   АНИМАЦИЯ ПРИ ПЕРЕКЛЮЧЕНИИ ВКЛАДОК
+   ================================================================ */
+.memoria-item-card {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.memoria-item-card.fly-out-left {
+    animation: flyOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+.memoria-item-card.fly-out-right {
+    animation: flyOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes flyOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-150px) rotate(-15deg);
+        pointer-events: none;
+    }
+}
+
+@keyframes flyOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(150px) rotate(15deg);
+        pointer-events: none;
+    }
+}
+
+/* Анимация появления новых карточек */
+.memoria-item-card.fly-in {
+    animation: flyIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+@keyframes flyIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
   </style>
 </head>
 <body>
@@ -3271,9 +3479,28 @@ const filmsDataGlobal = [
   }
 ];
 
+// ,
+//   { 
+//     id: , 
+//     title: "", 
+//     year: , 
+//     rating: "",
+//     review: "", 
+//     cover: ""
+//   }
+
 const booksDataGlobal = [
   { 
     id: 1, 
+    title: "Маленький принц", 
+    author: "	Антуан де Сент-Экзюпери", 
+    year: 1943, 
+    rating: "7.9", 
+    review: "Теперь я самый добрый", 
+    cover: "https://upload.wikimedia.org/wikipedia/ru/thumb/d/d2/LePetitPrince.JPG/330px-LePetitPrince.JPG"
+  },
+  { 
+    id: 2, 
     title: "Белые ночи", 
     author: "Фёдор Достоевский", 
     year: 1848, 
@@ -3282,6 +3509,17 @@ const booksDataGlobal = [
     cover: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Dostoyevski_-_White_Nights_%281865%29.jpg/330px-Dostoyevski_-_White_Nights_%281865%29.jpg"
   }
 ];
+
+// ,
+//   { 
+//     id: , 
+//     title: "", 
+//     author: "", 
+//     year: , 
+//     rating: "", 
+//     review: "", 
+//     cover: ""
+//   }
 
 // ================================================================
 // MEMORIA - ФИЛЬМЫ И КНИГИ
@@ -3350,19 +3588,75 @@ function initMemoriaFull() {
       });
       
       container.appendChild(card);
+
+      // После добавления карточек в container
+      setTimeout(() => {
+          initCardScrollAnimation(); // перезапускаем анимацию для новых карточек
+      }, 50);
     });
   }
   
   function switchType(type) {
-    currentType = type;
-    typeBtns.forEach(btn => {
-      if (btn.dataset.type === type) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-    renderItems();
+    if (currentType === type) return;
+    
+    const cards = document.querySelectorAll('.memoria-item-card');
+    const container = document.getElementById('memoriaItemsContainer');
+    
+    // Определяем направление анимации
+    const isGoingToFilms = (type === 'films');
+    const animationClass = isGoingToFilms ? 'fly-out-right' : 'fly-out-left';
+    const newAnimationClass = 'fly-in';
+    
+    // Если есть карточки — анимируем их исчезновение
+    if (cards.length > 0) {
+        // Добавляем класс анимации каждой карточке
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.03}s`;
+            card.classList.add(animationClass);
+        });
+        
+        // Ждём окончания анимации (самая длинная + задержка последней)
+        const maxDelay = (cards.length - 1) * 0.03;
+        setTimeout(() => {
+            // Меняем тип и перерисовываем
+            currentType = type;
+            typeBtns.forEach(btn => {
+                if (btn.dataset.type === type) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            renderItems();
+            
+            // Анимируем появление новых карточек
+            setTimeout(() => {
+                const newCards = document.querySelectorAll('.memoria-item-card');
+                newCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateX(50px)';
+                    card.style.animationDelay = `${index * 0.05}s`;
+                    card.classList.add(newAnimationClass);
+                    card.addEventListener('animationend', () => {
+                        card.classList.remove(newAnimationClass);
+                        card.style.animationDelay = '';
+                    }, { once: true });
+                });
+            }, 20);
+        }, 400 + maxDelay * 1000);
+        
+    } else {
+        // Если карточек нет — просто переключаем
+        currentType = type;
+        typeBtns.forEach(btn => {
+            if (btn.dataset.type === type) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        renderItems();
+    }
   }
   
   typeBtns.forEach(btn => {
@@ -3373,6 +3667,48 @@ function initMemoriaFull() {
   });
   
   renderItems();
+}
+
+// ================================================================
+// АНИМАЦИЯ КАРТОЧЕК ПРИ СКРОЛЛЕ (Intersection Observer)
+// ================================================================
+function initCardScrollAnimation() {
+    const cards = document.querySelectorAll('.memoria-item-card');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Карточка появилась в зоне видимости — показываем
+                entry.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateX(0)';
+            } else {
+                // Карточка ушла из зоны видимости — скрываем
+                entry.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateX(-20px)';
+            }
+        });
+    }, {
+        threshold: 0.3, // Карточка считается видимой, когда 30% элемента в зоне
+        rootMargin: '0px'
+    });
+
+    cards.forEach(card => {
+        observer.observe(card);
+        // Начальное состояние — скрыто
+        card.style.opacity = '0';
+        card.style.transform = 'translateX(-20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+}
+
+// Запускаем после отрисовки карточек
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCardScrollAnimation);
+} else {
+    initCardScrollAnimation();
 }
 
 // Запускаем после загрузки DOM
