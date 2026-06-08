@@ -3504,7 +3504,6 @@ function startAudioOnFirstClick() {
     bgAudio.volume = 0.1;
     bgAudio.play().then(() => {
       audioStarted = true;
-      console.log('🎵 Музыка играет');
     }).catch(e => console.log('Ошибка:', e));
   }
 }
@@ -3513,7 +3512,7 @@ function startAudioOnFirstClick() {
 document.addEventListener('click', startAudioOnFirstClick);
 
 // ================================================================
-// MEMORIA - ДАННЫЕ (ГЛОБАЛЬНЫЕ)
+// MEMORIA - ДАННЫЕ
 // ================================================================
 const filmsDataGlobal = [
   { 
@@ -4307,7 +4306,6 @@ if (document.readyState === 'loading') {
             return;
         }
         
-        console.log('▶️ Запуск анимации выпрыгивания');
         
         // Убираем класс visible если был
         dome.classList.remove('visible');
@@ -4320,7 +4318,6 @@ if (document.readyState === 'loading') {
             setTimeout(() => {
                 dome.classList.remove('bounce-in');
                 dome.classList.add('visible');
-                console.log('✅ Шар зафиксирован на месте');
             }, 850);
         }, 1300);
     }
@@ -4400,7 +4397,6 @@ if (document.readyState === 'loading') {
         
         loader.load(modelPath, 
             (gltf) => {
-                console.log('🎄 Модель ёлки загружена!');
                 const tree = gltf.scene;
                 scene.add(tree);
                 
@@ -4431,12 +4427,10 @@ if (document.readyState === 'loading') {
                 if (gltf.animations && gltf.animations.length > 0) {
                     mixer = new THREE.AnimationMixer(tree);
                     gltf.animations.forEach(clip => mixer.clipAction(clip).play());
-                    console.log(`🎄 Анимаций: ${gltf.animations.length}`);
                 }
             },
             (xhr) => {
                 const percent = Math.floor((xhr.loaded / xhr.total) * 100);
-                console.log(`Загрузка ёлки: ${percent}%`);
             },
             (error) => {
                 console.error('❌ Ошибка загрузки ёлки:', error);
@@ -4498,7 +4492,6 @@ if (document.readyState === 'loading') {
         window.addEventListener('resize', () => setTimeout(resizeCanvas, 100));
         resizeCanvas();
         
-        console.log('✅ 3D сцена для ёлки инициализирована');
     }
 
     // Запускаем инициализацию ёлки
@@ -4515,14 +4508,12 @@ if (document.readyState === 'loading') {
                     playBounceAnimation();
                 }, 500);
             };
-            console.log('✅ Анимация привязана к enterSecondView');
         }
     }, 100);
     
     // Также добавляем fallback на случай, если enterSecondView не сработает
     setTimeout(() => {
         if (!animationPlayed) {
-            console.log('⚠️ enterSecondView не сработал, запускаем анимацию вручную через 5 секунд');
             playBounceAnimation();
         }
     }, 5000);
